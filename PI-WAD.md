@@ -34,9 +34,27 @@ A interface será desenvolvida com foco na usabilidade, garantindo que qualquer 
   <img src="assets/persona-PI.png" width="80%">
 </div>
 
-### 2.2. User Stories (Semana 01)
+### 2.2. User Stories
 
-*Posicione aqui a lista de User Stories levantadas para o projeto. Siga o template de User Stories e utilize a referência USXX para numeração (US01, US02, US03, ...). Indique todas as User Stories mapeadas, mesmo aquelas que não forem implementadas ao longo do projeto. Não se esqueça de explicar o INVEST de 1 User Storie prioritária.*
+**US01**  
+Como estudante universitário, quero visualizar a disponibilidade das salas, para que eu possa escolher o melhor horário para estudar ou reunir meu grupo.
+
+**US02**  
+Como estudante universitário, quero poder reservar uma sala com antecedência, para que eu possa organizar a minha rotina de acordo com as minhas necessidades.
+
+**US03**  
+Como administrador, quero acessar o painel de controle, para que eu possa checar e aprovar as reservas e gerar relatórios de uso das salas.
+
+### Análise INVEST da User Story Prioritária
+
+**US01 – Como estudante universitário, quero visualizar a disponibilidade das salas, para que eu possa escolher o melhor horário para estudar ou reunir meu grupo.**
+
+- **I (Independente):** A história pode ser implementada separadamente da funcionalidade de reserva ou gestão administrativa.  
+- **N (Negociável):** O formato de visualização (lista, calendário, etc.) pode ser ajustado conforme as necessidades dos usuários.  
+- **V (Valiosa):** Permite que os estudantes escolham o melhor horário sem depender de terceiros, organizando melhor sua rotina.  
+- **E (Estimável):** O escopo é claro e pode ser estimado pela equipe de desenvolvimento.  
+- **S (Pequena):** Foca apenas na exibição da disponibilidade, sendo pequena e rápida de implementar.  
+- **T (Testável):** Pode ser testada ao verificar se os horários livres estão sendo exibidos corretamente.
 
 ---
 
