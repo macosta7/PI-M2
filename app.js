@@ -1,21 +1,31 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const routes = require('./routes');
 
-// Configura o mecanismo de views para EJS
+// Middlewares
+app.use(express.json()); // permite ler req.body em JSON
+app.use(express.urlencoded({ extended: true })); // permite ler formulários
+
+// Configuração de view engine
 app.set('view engine', 'ejs');
-
-// Define onde ficam as views
 app.set('views', path.join(__dirname, 'views'));
-
-// Define a pasta pública com CSS e outros arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Usa o arquivo de rotas
-app.use('/', routes);
+// Importa as rotas
+const usuarioRoutes = require('./routes/usuarios');
+const salaRoutes = require('./routes/salas');
+const horarioRoutes = require('./routes/horarios');
+const reservaRoutes = require('./routes/reservas');
+const notificacaoRoutes = require('./routes/notificacoes');
 
-// Inicia o servidor na porta 3000
+// Usa as rotas
+app.use('/', usuarioRoutes); // Mantém rota raiz com a tela de login
+app.use(salaRoutes);
+app.use(horarioRoutes);
+app.use(reservaRoutes);
+app.use(notificacaoRoutes);
+
+// Inicia o servidor
 app.listen(3000, () => {
   console.log('Servidor rodando em http://localhost:3000');
 });

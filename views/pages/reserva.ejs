@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reserva de Sala - Checkin Room</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>Reserva de Sala</h1>
+
+  <form action="/reservas" method="POST">
+    <label for="id_sala">Sala:</label><br>
+    <select name="id_sala" id="id_sala" required>
+      <!-- opções de sala devem ser populadas dinamicamente com JS ou servidor -->
+      <option value="1">Sala 101</option>
+      <option value="2">Sala 102</option>
+    </select><br><br>
+
+    <label for="data_reserva">Data da reserva:</label><br>
+    <input type="date" name="data_reserva" id="data_reserva" required><br><br>
+
+    <label for="id_horario">Horário:</label><br>
+    <select name="id_horario" id="id_horario" required>
+      <!-- opções de horário devem vir dinamicamente conforme a sala e a data -->
+      <option value="1">08:00 - 10:00</option>
+      <option value="2">10:00 - 12:00</option>
+    </select><br><br>
+
+    <!-- ID do usuário pode vir por sessão (ou temporariamente no form para testes) -->
+    <input type="hidden" name="id_usuario" value="1">
+
+    <button type="submit">Reservar</button>
+  </form>
+
+  <p><a href="/perfil">Ir para perfil</a></p>
+</body>
+</html>
