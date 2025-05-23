@@ -1,19 +1,37 @@
-// server.js
+require('dotenv').config();
 const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const routes = require('./routes');
-
+const path = require('path');
 const app = express();
-const port = 3000;
+const db = require('./config/db');
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.urlencoded({ extended: true }));
 
-// Middlewares
-app.use(cors());
-app.use(bodyParser.json());
+db.connect()
+  .then(() => {
+    console.log('Conectado ao banco de dados PostgreSQL');
 
-// Usando as rotas definidas
-app.use('/api', routes);
+    app.use(express.json());
 
-app.listen(port, () => {
-  console.log(`Servidor rodando na porta ${port}`);
-});
+    const userRoutes = require('./routes/usuarios');
+    app.use('/', userRoutes);
+
+    // Middleware para lidar com erros de rota não encontrada
+    app.use((req, res, next) => {
+      res.status(404).send('Página não encontrada');
+    });
+
+    // Middleware para lidar com erros internos do servidor
+    app.use((err, req, res, next) => {
+      console.error(err.stack);
+      res.status(500).send('Erro no servidor');
+    });
+
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log(`Servidor escutando em http://localhost:${PORT}`);
+    });
+  })
+  .catch(err => {
+    console.error('Erro ao conectar ao banco de dados:', err);
+  });

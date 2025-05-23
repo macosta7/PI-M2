@@ -1,83 +1,51 @@
-const pool = require('../config/database');
+const usuarioService = require("../services/usuarioService");
 
-// Criar novo usuário
-exports.criarUsuario = async (req, res) => {
-  const { nome, email, ocupacao, senha } = req.body;
-
-  const query = `
-    INSERT INTO usuarios (nm_usuario, email_usuario, ocupacao_usuario, senha_usuario)
-    VALUES ($1, $2, $3, $4)
-    RETURNING *;
-  `;
-  const values = [nome, email, ocupacao, senha];
-
+exports.create = async (req, res) => {
   try {
-    const result = await pool.query(query, values);
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    await usuarioService.create(req.body);
+    res.redirect("/login"); // redireciona para a tela de login
+  } catch (e) {
+    res.status(400).render("cadastro", { erro: e.message });
   }
 };
 
-// Login de usuário
 exports.login = async (req, res) => {
-  const { email, senha } = req.body;
-
-  const query = 'SELECT * FROM usuarios WHERE email_usuario = $1 AND senha_usuario = $2';
-  const values = [email, senha];
-
   try {
-    const result = await pool.query(query, values);
-    if (result.rows.length === 0) {
-      return res.status(401).json({ message: 'Credenciais inválidas' });
+    const usuario = await usuarioService.login(req.body.email, req.body.senha);
+    if (usuario) {
+      res.status(200).json(usuario);
+    } else {
+      res.status(401).json({ message: "Credenciais inválidas" });
     }
-    res.status(200).json(result.rows[0]);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
 };
 
-// Editar perfil do usuário
-exports.editarUsuario = async (req, res) => {
-  const { id } = req.params;
-  const { nome, email, ocupacao, senha } = req.body;
-
-  const query = `
-    UPDATE usuarios
-    SET nm_usuario = $1,
-        email_usuario = $2,
-        ocupacao_usuario = $3,
-        senha_usuario = $4
-    WHERE id_usuario = $5
-    RETURNING *;
-  `;
-  const values = [nome, email, ocupacao, senha, id];
-
+exports.detail = async (req, res) => {
   try {
-    const result = await pool.query(query, values);
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: 'Usuário não encontrado' });
-    }
-    res.status(200).json(result.rows[0]);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const usuario = await usuarioService.detail(req.params.id);
+    usuario ? res.json(usuario) : res.sendStatus(404);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
 };
 
-// Deletar usuário
-exports.excluirUsuario = async (req, res) => {
-  const { id } = req.params;
-
-  const query = 'DELETE FROM usuarios WHERE id_usuario = $1 RETURNING *';
-  const values = [id];
-
+exports.update = async (req, res) => {
   try {
-    const result = await pool.query(query, values);
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: 'Usuário não encontrado' });
-    }
-    res.status(200).json({ message: 'Usuário excluído com sucesso' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const usuarioAtualizado = await usuarioService.update(req.params.id, req.body);
+    res.json(usuarioAtualizado);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+};
+
+// Caso queira deixar pronto:
+exports.remove = async (req, res) => {
+  try {
+    await usuarioService.remove(req.params.id);
+    res.sendStatus(204);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
 };

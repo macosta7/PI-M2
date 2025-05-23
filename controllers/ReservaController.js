@@ -99,14 +99,16 @@ exports.rejeitarReserva = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 
-  const ReservaModel = require('../models/Reserva');
+  
+};
 
-  exports.exibirPainelAdmin = async (req, res) => {
-    try {
-        const reservas = await ReservaModel.listarReservasPendentesComDados();
-        res.render('pages/painelAdmin', { reservas });
-    } catch (err) {
-      res.status(500).send('Erro ao carregar painel administrativo: ' + err.message);
-    }
-  };
+const ReservaModel = require('../models/Reserva');
+
+exports.exibirPainelAdmin = async (req, res) => {
+  try {
+      const reservas = await ReservaModel.listarReservasPendentesComDados();
+      res.render('pages/painelAdmin', { reservas });
+  } catch (err) {
+    res.status(500).send('Erro ao carregar painel administrativo: ' + err.message);
+  }
 };

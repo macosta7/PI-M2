@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head><title>Cadastro</title></head>
+<body>
+  <h1>Cadastro de Usuário</h1>
+  
+  <% if (typeof erro !== 'undefined') { %>
+    <p style="color: red;"><%= erro %></p>
+  <% } %>
+
+  <form action="/usuarios" method="POST">
+    <label>Nome:</label>
+    <input type="text" name="nome" required><br>
+
+    <label>Email:</label>
+    <input type="email" name="email_usuario" required><br>
+
+    <label>Senha:</label>
+    <input type="password" name="senha_usuario" required><br>
+
+    <label>Ocupação:</label>
+    <select name="ocupacao_usuario" required>
+      <option value="aluno">Aluno</option>
+      <option value="professor">Professor</option>
+      <option value="coordenador">Coordenador</option>
+      <option value="recepcao">Recepção</option>
+    </select><br>
+
+    <button type="submit">Cadastrar</button>
+  </form>
+  <p>Já tem conta? <a href="/login">Faça login aqui</a></p>
+</body>
+</html>
