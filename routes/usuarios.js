@@ -19,7 +19,9 @@ router.get("/cadastro", (req, res) => {
 router.post("/usuarios", UsuarioController.create);         // Cadastro
 router.post("/login", UsuarioController.login);             // Login
 router.get("/usuarios/:id", UsuarioController.detail);      // Ver perfil
-router.put("/usuarios/:id", UsuarioController.update);      // Editar perfil
 router.delete("/usuarios/:id", UsuarioController.remove);   // Deletar perfil
+router.get("/editar-perfil", UsuarioController.editarPerfilForm); // Formulário de edição
+router.post("/editar-perfil", UsuarioController.update);          // Atualizar perfil
+
 
 module.exports = router;

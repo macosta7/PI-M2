@@ -10,8 +10,6 @@ exports.create = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  console.log("⏳ Entrando na função login");
-
   try {
     const usuario = await usuarioService.login(req.body.email, req.body.senha);
 
@@ -41,15 +39,6 @@ exports.detail = async (req, res) => {
   }
 };
 
-exports.update = async (req, res) => {
-  try {
-    const usuarioAtualizado = await usuarioService.update(req.params.id, req.body);
-    res.json(usuarioAtualizado);
-  } catch (e) {
-    res.status(400).json({ error: e.message });
-  }
-};
-
 // Caso queira deixar pronto:
 exports.remove = async (req, res) => {
   try {
@@ -59,3 +48,27 @@ exports.remove = async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 };
+
+exports.editarPerfilForm = async (req, res) => {
+  const id = req.session.id_usuario;
+  if (!id) return res.redirect("/login");
+
+  const usuario = await usuarioService.detail(id);
+  res.render("editarPerfil", { usuario, erro: null }); // define erro como null
+};
+
+exports.update = async (req, res) => {
+  const id = req.session.id_usuario;
+  if (!id) return res.redirect('/login');
+
+  try {
+    await usuarioService.update(id, req.body);
+    res.redirect('/reserva');
+  } catch (e) {
+    const usuario = await usuarioService.detail(id);
+    res.status(400).render('editarPerfil', { usuario, erro: e.message });
+  }
+};
+
+
+

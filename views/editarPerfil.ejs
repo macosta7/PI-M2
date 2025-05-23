@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head><title>Editar Perfil</title></head>
+<body>
+  <h1>Editar Perfil</h1>
+
+  <% if (erro) { %>
+    <p style="color:red;"><%= erro %></p>
+  <% } %>
+
+  <form action="/editar-perfil" method="POST">
+    <label>Nome:</label>
+    <input type="text" name="nome" value="<%= usuario.nm_usuario %>" required><br>
+
+    <label>Email:</label>
+    <input type="email" name="email_usuario" value="<%= usuario.email_usuario %>" required><br>
+
+    <label>Senha:</label>
+    <input type="password" name="senha_usuario" value="<%= usuario.senha_usuario %>" required><br>
+
+    <label>Ocupação:</label>
+    <select name="ocupacao_usuario" disabled>
+    <option value="aluno" <%= usuario.ocupacao_usuario === "aluno" ? "selected" : "" %>>Aluno</option>
+    <option value="professor" <%= usuario.ocupacao_usuario === "professor" ? "selected" : "" %>>Professor</option>
+    <option value="coordenador" <%= usuario.ocupacao_usuario === "coordenador" ? "selected" : "" %>>Coordenador</option>
+    <option value="recepcao" <%= usuario.ocupacao_usuario === "recepcao" ? "selected" : "" %>>Recepção</option>
+    </select>
+    <input type="hidden" name="ocupacao_usuario" value="<%= usuario.ocupacao_usuario %>">
+    <br>
+
+    <button type="submit">Salvar</button>
+  </form>
+</body>
+</html>
