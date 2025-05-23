@@ -18,60 +18,60 @@ Sistema web para automação do processo de **reserva de salas em ambientes acad
 
 ## 📁 Estrutura de Pastas
 
-PI-M2/      
-├── config/                         # Configurações gerais
-│   └── db.js                      # Conexão com o banco de dados PostgreSQL
-│
-├── controllers/                   # Lógica das requisições HTTP (entrada das rotas)
-│   └── ReservaController.js       
-│   └── UsuarioController.js       
-│   └── NotificacaoController.js   
-│
-├── models/                        # Esquemas de validação de dados com Joi
-│   └── reservaModel.js           
-│   └── usuarioModel.js
-│   └── notificacaoModel.js              
-│
-├── repositories/                  # Acesso ao banco de dados (consultas SQL)
-│   └── reservaRepository.js      
-│   └── usuarioRepository.js      
-│   └── notificacaoRepository.js  
-│
-├── routes/                        # Definição das rotas da aplicação
-│   └── reservas.js               
-│   └── usuarios.js               
-│   └── notificacoes.js  
-│   └── horarios.js
-│   └── salas.js         
-│
-├── services/                      # Regras de negócio e lógica entre controller e repository
-│   └── reservaService.js         
-│   └── usuarioService.js         
-│   └── notificacaoService.js     
-│
-├── views/                         # Arquivos EJS com as páginas da aplicação (front-end)
-│   └── login.ejs                 
-│   └── cadastro.ejs              
-│   └── reserva.ejs               
-│   └── painelAdmin.ejs           
-│   └── editarPerfil.ejs          
-│   └── notificacoes.ejs          
-│
-├── scripts/                       # Scripts utilitários opcionais
-│   └── init.sql                   # Script para criação/inicialização das tabelas
-│   └── runsql.js                  # Script para rodar o SQL via Node
-│
-├── public/                        # Arquivos públicos (CSS, imagens, etc)
-│   └── css/
-│       └── style.css              # Estilização da aplicação (não implementado ainda)
-│
-├── .env                           # Variáveis de ambiente (credenciais DB, porta, etc)
-├── .gitignore                     # Arquivos e pastas ignorados pelo Git
-├── package.json                   # Scripts e dependências do projeto
-├── package-lock.json              # Versões travadas das dependências
-├── server.js                      # Arquivo principal para iniciar o servidor Express
-├── readme.md                      # Documentação do projeto
-└── PI-WAD.md                      # Entregável da disciplina/documentação formal
+PI-M2/                    
+├── config/                         # Configurações gerais                      
+│   └── db.js                      # Conexão com o banco de dados PostgreSQL                     
+│                     
+├── controllers/                   # Lógica das requisições HTTP (entrada das rotas)                  
+│   └── ReservaController.js                         
+│   └── UsuarioController.js                    
+│   └── NotificacaoController.js                            
+│                            
+├── models/                        # Esquemas de validação de dados com Joi                     
+│   └── reservaModel.js                            
+│   └── usuarioModel.js                                 
+│   └── notificacaoModel.js                                  
+│                             
+├── repositories/                  # Acesso ao banco de dados (consultas SQL)                          
+│   └── reservaRepository.js                                 
+│   └── usuarioRepository.js                                       
+│   └── notificacaoRepository.js                         
+│                                    
+├── routes/                        # Definição das rotas da aplicação                                  
+│   └── reservas.js                                                
+│   └── usuarios.js                                       
+│   └── notificacoes.js                                   
+│   └── horarios.js                                               
+│   └── salas.js                                                   
+│                                              
+├── services/                      # Regras de negócio e lógica entre controller e repository                                       
+│   └── reservaService.js                                        
+│   └── usuarioService.js                                                     
+│   └── notificacaoService.js                                                              
+│                                                              
+├── views/                         # Arquivos EJS com as páginas da aplicação (front-end)                                          
+│   └── login.ejs                                              
+│   └── cadastro.ejs                                                
+│   └── reserva.ejs                                                 
+│   └── painelAdmin.ejs                                                    
+│   └── editarPerfil.ejs                                       
+│   └── notificacoes.ejs                                                
+│                                     
+├── scripts/                       # Scripts utilitários opcionais                                           
+│   └── init.sql                   # Script para criação/inicialização das tabelas                                     
+│   └── runsql.js                  # Script para rodar o SQL via Node                                      
+│                                        
+├── public/                        # Arquivos públicos (CSS, imagens, etc)                          
+│   └── css/                                         
+│       └── style.css              # Estilização da aplicação (não implementado ainda)                                            
+│                                    
+├── .env                           # Variáveis de ambiente (credenciais DB, porta, etc)                                         
+├── .gitignore                     # Arquivos e pastas ignorados pelo Git                                         
+├── package.json                   # Scripts e dependências do projeto                                              
+├── package-lock.json              # Versões travadas das dependências                                                   
+├── server.js                      # Arquivo principal para iniciar o servidor Express                                        
+├── readme.md                      # Documentação do projeto                                           
+└── PI-WAD.md                      # Entregável da disciplina/documentação formal                                    
   
 
 ## ▶️ Como Executar o Projeto Localmente
