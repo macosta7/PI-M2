@@ -10,15 +10,25 @@ exports.create = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+  console.log("⏳ Entrando na função login");
+
   try {
     const usuario = await usuarioService.login(req.body.email, req.body.senha);
-    if (usuario) {
-      res.status(200).json(usuario);
+
+    if (!usuario) {
+      return res.status(401).render("login", { erro: "Credenciais inválidas" });
+    }
+
+    req.session.id_usuario = usuario.id_usuario;
+
+    if (usuario.ocupacao_usuario === "recepcao") {
+      return res.redirect("/painel-admin");
     } else {
-      res.status(401).json({ message: "Credenciais inválidas" });
+      return res.redirect("/reserva");
     }
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    console.error(e);
+    res.status(500).render("login", { erro: "Erro no servidor" });
   }
 };
 

@@ -1,20 +1,36 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const app = express();
+const session = require("express-session");
 const db = require('./config/db');
+const app = express();
+
+// Configuração de view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+// Middlewares globais
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// ✅ Configuração de sessão ANTES das rotas
+app.use(session({
+  secret: 'checkin-room-seguro',
+  resave: false,
+  saveUninitialized: false
+}));
+
+// Conexão com o banco de dados
 db.connect()
   .then(() => {
     console.log('Conectado ao banco de dados PostgreSQL');
 
-    app.use(express.json());
-
+    // Rotas
     const userRoutes = require('./routes/usuarios');
+    const reservaRoutes = require('./routes/reservas');
+
     app.use('/', userRoutes);
+    app.use('/', reservaRoutes);
 
     // Middleware para lidar com erros de rota não encontrada
     app.use((req, res, next) => {
@@ -27,6 +43,7 @@ db.connect()
       res.status(500).send('Erro no servidor');
     });
 
+    // Inicializa o servidor
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
       console.log(`Servidor escutando em http://localhost:${PORT}`);
