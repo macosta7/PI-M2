@@ -126,19 +126,92 @@ CREATE TABLE notificacoes (
 );
 ```
 
-### 3.1.1 BD e Models (Semana 5)
-*Descreva aqui os Models implementados no sistema web*
+### 3.1.1 BD e Models
 
-### 3.2. Arquitetura (Semana 5)
+O sistema utiliza um banco de dados relacional PostgreSQL hospedado na plataforma Supabase. Os dados do sistema estão organizados em tabelas com as seguintes entidades principais:
 
-*Posicione aqui o diagrama de arquitetura da sua solução de aplicação web. Atualize sempre que necessário.*
+#### 🧾 Entidades do Banco de Dados
 
-**Instruções para criação do diagrama de arquitetura**  
-- **Model**: A camada que lida com a lógica de negócios e interage com o banco de dados.
-- **View**: A camada responsável pela interface de usuário.
-- **Controller**: A camada que recebe as requisições, processa as ações e atualiza o modelo e a visualização.
-  
-*Adicione as setas e explicações sobre como os dados fluem entre o Model, Controller e View.*
+- **usuarios**
+  - `id_usuario` (PK): Identificador único do usuário
+  - `nome`: Nome completo
+  - `email_usuario`: Email do usuário (único)
+  - `senha_usuario`: Senha em texto plano (sem criptografia para fins de prototipagem)
+  - `ocupacao_usuario`: Pode ser `aluno`, `professor`, `coordenador` ou `recepcao`
+
+- **salas**
+  - `id_sala` (PK): Identificador da sala
+  - `nm_sala`: Nome ou número da sala (ex: Sala 1, Sala 2...)
+
+- **horarios**
+  - `id_horario` (PK): Identificador do horário
+  - `dia_semana`: Dia da semana (opcional para futuras versões)
+  - `horario_inicio`: Horário de início (ex: 08:00:00)
+  - `horario_fim`: Horário de término (ex: 09:00:00)
+
+- **reservas**
+  - `id_reserva` (PK): Identificador da reserva
+  - `id_usuario` (FK): Referência ao usuário que fez a reserva
+  - `id_sala` (FK): Sala reservada
+  - `data_reserva`: Data da reserva
+  - `id_horario` (FK): Horário reservado
+  - `status_reserva`: Pode ser `pendente`, `aprovada` ou `rejeitada`
+
+- **notificacoes**
+  - `id_notificacao` (PK): Identificador da notificação
+  - `id_usuario` (FK): Usuário que receberá a notificação
+  - `id_reserva` (FK): Reserva relacionada
+  - `mensagem_notificacao`: Texto da notificação (ex: "Sua reserva foi aprovada")
+  - `visualizada_notificacao`: Booleano que indica se a notificação já foi lida
+  - `data_criacao`: Data/hora em que a notificação foi criada
+
+#### ✅ Models com Validação (Joi)
+
+Além da modelagem no banco de dados, o sistema implementa validações em nível de aplicação por meio da biblioteca `Joi`. Os arquivos de validação estão localizados na pasta `models/`:
+
+- `usuarioModel.js`: Valida nome, email, senha e ocupação
+- `reservaModel.js`: Valida id da sala, horário, data e status
+- `notificacaoModel.js`: Valida id do usuario, id da reserva, mensagem de notificacao, visualizacao e data
+
+### 3.2 Arquitetura
+
+O sistema web segue uma arquitetura baseada no padrão **MVC estendido**, com separação clara entre as responsabilidades das camadas. A arquitetura foi adaptada para manter o projeto modular e de fácil manutenção, incorporando camadas intermediárias de **services** e **repositories**.
+
+<div align="center">
+  <sub>Diagrama de Arquitetura</sub><br>
+  <img src="assets/diagrama-de-arquitetura.png" width="85%"><br>
+  <a href="https://www.figma.com/design/rbwxwsD2TCtxKSFSgmsAzJ/Untitled?node-id=0-1&t=ElXLSMoT2ghOvWdu-1" target="_blank">
+    <sup>Link Figma</sup>
+  </a><br>
+</div>
+
+---
+
+#### 🔁 Fluxo de Dados
+
+- **Views**: arquivos `.ejs` localizados na pasta `views/`. São responsáveis por exibir o conteúdo ao usuário e coletar entradas de dados (login, cadastro, reservas, etc).
+
+- **Controllers**: recebem requisições HTTP, processam os dados de entrada, chamam os serviços adequados e retornam a resposta. Também gerenciam o fluxo entre views e regras de negócio.
+
+- **Services**: camadas intermediárias que concentram a lógica de negócio. Realizam validações, processam regras, organizam dados e acionam os repositórios quando necessário.
+
+- **Repositories**: são responsáveis por executar diretamente as queries no banco de dados PostgreSQL (via Supabase), de forma organizada e desacoplada da lógica de negócio.
+
+- **Models**: usam a biblioteca `Joi` para validar os dados de entrada antes que cheguem ao banco de dados.
+
+- **Banco de Dados**: hospedado no **Supabase**, armazena entidades como `usuarios`, `reservas`, `notificacoes`, `salas` e `horarios`.
+
+---
+
+#### 📌 Resumo dos fluxos principais
+
+- **Login e Cadastro**: dados entram via `login.ejs` e `cadastro.ejs`, passam pelo `UsuarioController`, são validados via `usuarioModel` e persistidos via `usuarioRepository`.
+
+- **Reserva de Salas**: o `ReservaController` exibe horários disponíveis, chama `reservaService` para validar conflitos e cria reservas via `reservaRepository`.
+
+- **Painel da Recepção**: o `ReservaController` lista reservas pendentes e envia decisões (aprovar/rejeitar). Essas ações também geram notificações.
+
+- **Notificações**: o `NotificacaoController` acessa notificações do usuário, renderiza na view `notificacoes.ejs` e interage com `notificacaoRepository`.
 
 ### 3.3. Wireframes
 
@@ -160,18 +233,121 @@ CREATE TABLE notificacoes (
   <sup>O wireframe do administrador oferece uma visão centralizada das solicitações de reserva por meio de um painel de controle (US03). Nessa interface, o admin consegue visualizar todos os pedidos de reserva com informações como nome do usuário, sala, horário, data e ocupação para que ele possa priorizar as reservas e evitar conflitos de horário, além de ter a opção de aprovar ou rejeitar as solicitações. A funcionalidade de login e edição de perfil também estão presentes, garantindo segurança e controle de acesso.</sup>
 </div>
 
-### 3.4. Guia de estilos (Semana 05)
+### 3.4. Guia de Estilos
 
-*Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução.*
+O guia de estilos do sistema **Checkin Room** foi desenvolvido para garantir consistência visual, acessibilidade e clareza na interação com o usuário. Abaixo estão os principais elementos que compõem o estilo visual da aplicação:
 
+#### ✅ Tipografia
 
-### 3.5. Protótipo de alta fidelidade (Semana 05)
+* **Fonte principal:** Utilizada em títulos, botões e textos importantes.
+* **Hierarquia:** H1, H2, H3 e parágrafos organizam a informação por importância.
 
-*Posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização).*
+#### ✅ Paleta de Cores
 
-### 3.6. WebAPI e endpoints (Semana 05)
+| Cor         | Código    | Uso                                             |
+| ----------- | --------- | ----------------------------------------------- |
+| Roxo escuro | `#2E2640` | Títulos, ícones e botões principais             |
+| Vermelho    | `#E84A4A` | Alertas, botões "Rejeitar", reservas rejeitadas |
+| Verde       | `#6EF38D` | Botões "Aceitar", reservas aprovadas            |
+| Cinza claro | `#C1ADAD` | Divisores e elementos de apoio                  |
+| Branco      | `#FFFFFF` | Fundo e contraste                               |
 
-*Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.*  
+#### ✅ Ícones
+
+* **Envelope:** Campo de e-mail
+* **Pessoa:** Campo de nome
+* **Carteira de trabalho:** Campo de ocupação
+* **Cadeado:** Campo de senha
+* **Lápis:** Editar imagem do perfil
+* **Sino:** Acessar notificações
+* **✔️ / ❌:** Indicam aprovação ou rejeição da reserva
+
+#### ✅ Layout e Estética
+
+* A interface é limpa, com espaçamento adequado e botões grandes e clicáveis.
+* Cada componente visual (botões, campos de texto, modais) segue padrões definidos, otimizando a experiência do usuário e facilitando a navegação.
+
+#### 📎 Guia Visual
+
+<div align="center">
+  <sub>Guia de Estilos</sub><br>
+  <img src="assets/guia-de-estilos.png" width="85%"><br>
+  <a href="https://www.figma.com/design/ciAqelvhj4Sv3JKkpFbmJx/telas-projeto-individual?node-id=34-2&p=f" target="_blank">
+    <sup>Link Figma</sup>
+  </a><br>
+</div>
+
+---
+
+### 3.5. Protótipo de alta fidelidade
+
+O protótipo de alta fidelidade foi desenvolvido para representar com precisão a experiência final do usuário na aplicação. Ele contempla todas as interações principais, incluindo o fluxo do usuário comum com: Cadastro, Login, Reservas, Notificaçãoe e Editar Perfil. E também o fluxo do Administrador (recepção), Painel de Controle e Editar Perfil. Com o protótipo de alta fidelidade criado é possível utilizá-lo como base para o desenvolvimento do front-end, facilitando a validação as users stories e garantindo que as implementações sigam o planejamento de usabilidade e identidade visual definidos no guia de estilos.
+
+<div align="center">
+  <sub>Protótipo de Alta Qualidade - User</sub><br>
+  <img src="assets/prototipo-fluxo-user.png" width="85%"><br>
+  <a href="https://www.figma.com/design/ciAqelvhj4Sv3JKkpFbmJx/telas-projeto-individual?node-id=34-2&p=f" target="_blank">
+    <sup>Link Figma</sup>
+  </a><br>
+</div>
+
+<div align="center">
+  <sub>Protótipo de Alta Qualidade - Admin</sub><br>
+  <img src="assets/prototipo-fluxo-admin.png" width="85%"><br>
+  <a href="https://www.figma.com/design/ciAqelvhj4Sv3JKkpFbmJx/telas-projeto-individual?node-id=34-2&p=f" target="_blank">
+    <sup>Link Figma</sup>
+  </a><br>
+</div>
+
+### 3.6 WebAPI e Endpoints
+
+Aqui estão descritos todos os endpoints implementados no sistema Checkin Room. A API segue o padrão RESTful, utilizando o framework **Express** no back-end para receber e processar requisições HTTP. Os endpoints foram organizados por módulo funcional para facilitar a navegação e compreensão. Cada rota trata uma funcionalidade específica, como autenticação, manipulação de reservas ou exibição de notificações ao usuário.
+
+---
+
+#### 🔐 Autenticação e Usuários (`/usuarios`)
+
+| Método | Rota              | Descrição                                     |
+|--------|-------------------|-----------------------------------------------|
+| POST   | `/usuarios`       | Criação de novo usuário (cadastro)            |
+| POST   | `/login`          | Autenticação de usuário (login)               |
+| GET    | `/editar-perfil`  | Exibe formulário de edição do perfil          |
+| POST   | `/editar-perfil`  | Atualiza os dados do usuário logado           |
+| GET    | `/usuarios/:id`   | Retorna os dados de um usuário específico     |
+| PUT    | `/usuarios/:id`   | Atualiza dados de um usuário específico       |
+| DELETE | `/usuarios/:id`   | Remove um usuário do sistema                  |
+
+---
+
+#### 🏢 Reservas (`/reserva` e `/reservas`)
+
+| Método | Rota                         | Descrição                                       |
+|--------|------------------------------|-------------------------------------------------|
+| GET    | `/reserva`                   | Exibe o formulário de reserva                   |
+| POST   | `/reserva`                   | Cria uma nova reserva de sala                   |
+| POST   | `/reserva/disponiveis`       | Lista horários disponíveis para sala e data     |
+
+---
+
+#### 🧾 Painel da Recepção (`/painel-admin`)
+
+| Método | Rota                                | Descrição                               |
+|--------|-------------------------------------|-----------------------------------------|
+| GET    | `/painel-admin`                     | Exibe reservas pendentes para aprovação |
+| POST   | `/reservas/:id/aprovar`             | Aprova a reserva                        |
+| POST   | `/reservas/:id/rejeitar`            | Rejeita a reserva                       |
+
+---
+
+#### 🔔 Notificações (`/notificacoes`)
+
+| Método | Rota                | Descrição                                           |
+|--------|---------------------|-----------------------------------------------------|
+| GET    | `/notificacoes`     | Lista notificações do usuário logado                |
+
+---
+
+> 🔐 **Observação:** o sistema utiliza `express-session` para manter a sessão de login e validar qual usuário está autenticado nas rotas protegidas.
 
 ### 3.7 Interface e Navegação (Semana 07)
 

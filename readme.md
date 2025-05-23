@@ -18,8 +18,9 @@ Sistema web para automação do processo de **reserva de salas em ambientes acad
 
 ## 📁 Estrutura de Pastas
 
-PI-M2/                    
-├── config/                         # Configurações gerais                      
+PI-M2/              
+├── assets/                        # Pasta para armazenar imagens        
+├── config/                        # Configurações gerais                      
 │   └── db.js                      # Conexão com o banco de dados PostgreSQL                     
 │                     
 ├── controllers/                   # Lógica das requisições HTTP (entrada das rotas)                  
