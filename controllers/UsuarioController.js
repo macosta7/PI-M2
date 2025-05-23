@@ -18,12 +18,14 @@ exports.login = async (req, res) => {
     }
 
     req.session.id_usuario = usuario.id_usuario;
+    req.session.ocupacao_usuario = usuario.ocupacao_usuario; // ✅ ESSENCIAL PARA DIRECIONAR ADMIN
 
     if (usuario.ocupacao_usuario === "recepcao") {
       return res.redirect("/painel-admin");
     } else {
       return res.redirect("/reserva");
     }
+
   } catch (e) {
     console.error(e);
     res.status(500).render("login", { erro: "Erro no servidor" });

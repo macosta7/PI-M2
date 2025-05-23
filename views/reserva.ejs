@@ -2,43 +2,46 @@
 <html>
 <head><title>Reserva de Sala</title></head>
 <body>
+  
   <div style="text-align: right; margin: 10px;">
     <a href="/editar-perfil">
       <button>Editar Perfil</button>
     </a>
+    <a href="/notificacoes" style="margin-left: 10px;">
+      <button>Notificações</button>
+    </a>
   </div>
 
   <h1>Consultar horários disponíveis</h1>
-    <form action="/reserva/disponiveis" method="POST">
+  <form action="/reserva/disponiveis" method="POST">
     <label>Sala:</label>
     <select name="id_sala" required>
-        <% salas.forEach(sala => { %>
+      <% salas.forEach(sala => { %>
         <option value="<%= sala.id_sala %>" <%= sala.id_sala == salaSelecionada ? "selected" : "" %>><%= sala.nm_sala %></option>
-        <% }) %>
+      <% }) %>
     </select><br>
 
     <label>Data:</label>
     <input type="date" name="data_reserva" value="<%= dataSelecionada || "" %>" required><br>
 
     <button type="submit">Buscar horários</button>
-    </form>
-
-    <% if (typeof horarios !== 'undefined') { %>
-    <h2>Horários disponíveis:</h2>
-    <form action="/reserva" method="POST">
-        <input type="hidden" name="id_sala" value="<%= salaSelecionada %>" />
-        <input type="hidden" name="data_reserva" value="<%= dataSelecionada %>" />
-
-        <label>Horário:</label>
-        <select name="id_horario" required>
-        <% horarios.forEach(h => { %>
-            <option value="<%= h.id_horario %>"><%= h.horario_inicio %> - <%= h.horario_fim %></option>
-        <% }) %>
-        </select><br>
-
-        <button type="submit">Reservar</button>
-    </form>
-    <% } %>
   </form>
+
+  <% if (typeof horarios !== 'undefined') { %>
+    <h2>Horários disponíveis:</h2>
+    <form action="/reserva" method="POST" onsubmit="console.log('Formulário de reserva enviado')">
+      <input type="hidden" name="id_sala" value="<%= salaSelecionada %>" />
+      <input type="hidden" name="data_reserva" value="<%= dataSelecionada %>" />
+
+      <label>Horário:</label>
+      <select name="id_horario" required>
+        <% horarios.forEach(h => { %>
+          <option value="<%= h.id_horario %>"><%= h.horario_inicio %> - <%= h.horario_fim %></option>
+        <% }) %>
+      </select><br>
+
+      <button type="submit">Reservar</button>
+    </form>
+  <% } %>
 </body>
 </html>

@@ -44,5 +44,38 @@ module.exports = {
     `, [id_sala, data_reserva]);
 
     return result.rows;
-  }
+  },
+
+  async listarPendentesComUsuarioSala() {
+    const result = await db.query(`
+      SELECT 
+        reservas.id_reserva,
+        reservas.data_reserva,
+        reservas.status_reserva,
+        usuarios.nm_usuario,
+        salas.nm_sala,
+        horarios.horario_inicio,
+        horarios.horario_fim
+      FROM reservas
+      JOIN usuarios ON reservas.id_usuario = usuarios.id_usuario
+      JOIN salas ON reservas.id_sala = salas.id_sala
+      JOIN horarios ON reservas.id_horario = horarios.id_horario
+      WHERE status_reserva = 'pendente'
+      ORDER BY data_reserva ASC;
+    `);
+    return result.rows;
+  },
+
+  async  atualizarStatus(id_reserva, status) {
+    const result = await db.query(`
+      UPDATE reservas
+      SET status_reserva = $1
+      WHERE id_reserva = $2
+      RETURNING *;
+    `, [status, id_reserva]);
+    return result.rows[0];
+  },
 };
+
+
+

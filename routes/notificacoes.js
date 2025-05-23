@@ -1,12 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const NotificacaoController = require('../controllers/NotificacaoController');
+const { Router } = require("express");
+const notificacaoController = require("../controllers/NotificacaoController");
 
-router.get('/notificacoes/usuario/:id_usuario/view', NotificacaoController.exibirNotificacoes);
-router.post('/notificacoes', NotificacaoController.enviarNotificacao);
-router.get('/notificacoes/usuario/:id_usuario', NotificacaoController.listarNotificacoesDoUsuario);
-router.post('/notificacoes/:id', NotificacaoController.marcarComoVisualizada);
-router.delete('/notificacoes/:id', NotificacaoController.excluirNotificacao);
+const router = Router();
+
+// Corrigido: só uma rota que chama o controller corretamente
+router.get("/notificacoes", notificacaoController.listar);
 
 module.exports = router;
-

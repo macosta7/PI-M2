@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Notificações</title>
+</head>
+<body>
+  <div style="text-align: right; margin: 10px;">
+    <a href="/editar-perfil">
+      <button>Editar Perfil</button>
+    </a>
+    <a href="/reserva">
+      <button>Voltar</button>
+    </a>
+  </div>
+
+  <h1>Suas Notificações</h1>
+
+  <% if (notificacoes.length === 0) { %>
+    <p>Você não possui notificações.</p>
+  <% } else { %>
+    <% notificacoes.forEach(n => { %>
+      <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+        <p><strong>Sala:</strong> <%= n.nm_sala %></p>
+        <p><strong>Data:</strong> <%= new Date(n.data_reserva).toLocaleDateString() %></p>
+        <p><strong>Horário:</strong> <%= n.horario_inicio %> - <%= n.horario_fim %></p>
+        <p><strong>Status:</strong>  <%= n.status_reserva %></p>
+        <p><strong>Mensagem:</strong> <%= n.mensagem_notificacao %></p>
+      </div>
+    <% }) %>
+  <% } %>
+</body>
+</html>

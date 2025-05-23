@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Painel da Recepção</title>
+</head>
+<body>
+  <h1>Painel da Recepção</h1>
+
+  <% if (reservas.length === 0) { %>
+    <p>Nenhuma reserva pendente.</p>
+  <% } else { %>
+    <% reservas.forEach(r => { %>
+      <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+        <p><strong>Usuário:</strong> <%= r.nm_usuario %></p>
+        <p><strong>Ocupação:</strong> <%= r.ocupacao_usuario %></p>
+        <p><strong>Sala:</strong> <%= r.nm_sala %></p>
+        <p><strong>Data:</strong> <%= r.data_reserva.toISOString().split('T')[0] %></p>
+        <p><strong>Horário:</strong> <%= r.horario_inicio %> - <%= r.horario_fim %></p>
+
+        <form action="/reservas/<%= r.id_reserva %>/aprovar" method="POST" style="display:inline;">
+          <button type="submit">Aprovar</button>
+        </form>
+        <form action="/reservas/<%= r.id_reserva %>/rejeitar" method="POST" style="display:inline;">
+          <button type="submit">Rejeitar</button>
+        </form>
+      </div>
+    <% }) %>
+  <% } %>
+
+  <a href="/reserva">Voltar</a>
+</body>
+</html>

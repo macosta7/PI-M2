@@ -28,9 +28,11 @@ db.connect()
     // Rotas
     const userRoutes = require('./routes/usuarios');
     const reservaRoutes = require('./routes/reservas');
+    const notificacaoRoutes = require('./routes/notificacoes');
 
     app.use('/', userRoutes);
     app.use('/', reservaRoutes);
+    app.use('/', notificacaoRoutes);
 
     // Middleware para lidar com erros de rota não encontrada
     app.use((req, res, next) => {
