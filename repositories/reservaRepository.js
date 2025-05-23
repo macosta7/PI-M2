@@ -1,12 +1,12 @@
-const db = require("../config/db");
+const db = require("../config/db"); // Importa a configuração do banco de dados
 
-module.exports = {
-  async buscarSalas() {
+module.exports = { // Exporta um objeto com métodos para interagir com a tabela de notificações
+  async buscarSalas() { // Função para buscar todas as salas
     const result = await db.query("SELECT id_sala, nm_sala FROM salas ORDER BY nm_sala ASC");
-    return result.rows;
+    return result.rows; // Retorna as salas encontradas
   },
 
-  async criarReserva(data) {
+  async criarReserva(data) { // Função para criar uma nova reserva
     const query = `
       INSERT INTO reservas (id_usuario, id_sala, data_reserva, id_horario, status_reserva)
       VALUES ($1, $2, $3, $4, 'pendente')
@@ -18,20 +18,20 @@ module.exports = {
       data.data_reserva,
       data.id_horario
     ];
-    const result = await db.query(query, values);
-    return result.rows[0];
+    const result = await db.query(query, values); // Executa a consulta no banco de dados
+    return result.rows[0]; // Retorna a reserva criada
   },
 
-  async buscarHorarios() {
-    const result = await db.query(`
+  async buscarHorarios() { // Função para buscar todos os horários
+    const result = await db.query(` 
         SELECT id_horario, horario_inicio, horario_fim 
         FROM horarios
         ORDER BY horario_inicio
     `);
-    return result.rows;
+    return result.rows; // Retorna os horários encontrados
   },
   
-  async buscarHorariosDisponiveis(id_sala, data_reserva) {
+  async buscarHorariosDisponiveis(id_sala, data_reserva) { // Função para buscar horários disponíveis para uma sala e data específicas
     const result = await db.query(`
         SELECT h.*
         FROM horarios h
@@ -43,10 +43,10 @@ module.exports = {
         ORDER BY h.horario_inicio;
     `, [id_sala, data_reserva]);
 
-    return result.rows;
+    return result.rows; // Retorna os horários disponíveis
   },
 
-  async listarPendentesComUsuarioSala() {
+  async listarPendentesComUsuarioSala() { // Função para listar reservas pendentes com informações de usuário e sala
     const result = await db.query(`
       SELECT 
         reservas.id_reserva,
@@ -63,17 +63,17 @@ module.exports = {
       WHERE status_reserva = 'pendente'
       ORDER BY data_reserva ASC;
     `);
-    return result.rows;
+    return result.rows; // Retorna as reservas pendentes encontradas
   },
 
-  async  atualizarStatus(id_reserva, status) {
+  async  atualizarStatus(id_reserva, status) { // Função para atualizar o status de uma reserva
     const result = await db.query(`
       UPDATE reservas
       SET status_reserva = $1
       WHERE id_reserva = $2
       RETURNING *;
     `, [status, id_reserva]);
-    return result.rows[0];
+    return result.rows[0]; // Retorna a reserva atualizada
   },
 };
 

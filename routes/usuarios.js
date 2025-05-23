@@ -1,27 +1,26 @@
-const { Router } = require("express");
-const UsuarioController = require("../controllers/UsuarioController");
+const { Router } = require("express"); // Importa o Router do express
+const UsuarioController = require("../controllers/UsuarioController"); // Importa o controlador de usuários
 
-const router = Router();
+const router = Router(); // Cria um roteador para gerenciar as rotas
 
 
-router.get("/", (req, res) => {
-  res.redirect("/login"); // ou 'cadastro', se preferir como tela inicial
+router.get("/", (req, res) => { // Rota inicial
+  res.redirect("/login"); // Redireciona para a página de login
 });
 
 router.get("/login", (req, res) => {
-  res.render("login"); // ou 'cadastro', se preferir como tela inicial
+  res.render("login"); // Renderiza a página de login
 });
 
 router.get("/cadastro", (req, res) => {
-  res.render("cadastro"); // ou 'cadastro', se preferir como tela inicial
+  res.render("cadastro"); // Renderiza a página de cadastro
 });
 
-router.post("/usuarios", UsuarioController.create);         // Cadastro
+router.post("/usuarios", UsuarioController.create);         // Cadastrar usuário
 router.post("/login", UsuarioController.login);             // Login
-router.get("/usuarios/:id", UsuarioController.detail);      // Ver perfil
-router.delete("/usuarios/:id", UsuarioController.remove);   // Deletar perfil
-router.get("/editar-perfil", UsuarioController.editarPerfilForm); // Formulário de edição
+router.get("/usuarios/:id", UsuarioController.detail);      // Detalhes do usuário
+router.delete("/usuarios/:id", UsuarioController.remove);   // Excluir usuário
+router.get("/editar-perfil", UsuarioController.editarPerfilForm); // Renderizar o formulário de edição de perfil
 router.post("/editar-perfil", UsuarioController.update);          // Atualizar perfil
 
-
-module.exports = router;
+module.exports = router; // Exporta o roteador para ser utilizado em outros arquivos

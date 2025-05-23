@@ -1,9 +1,8 @@
-const { Router } = require("express");
-const notificacaoController = require("../controllers/NotificacaoController");
+const { Router } = require("express"); // Importa o Router do express
+const notificacaoController = require("../controllers/NotificacaoController"); // Importa o controlador de notificações
 
-const router = Router();
+const router = Router(); // Cria um roteador para gerenciar as rotas
 
-// Corrigido: só uma rota que chama o controller corretamente
-router.get("/notificacoes", notificacaoController.listar);
+router.get("/notificacoes", notificacaoController.listar); // Rota para listar notificações
 
-module.exports = router;
+module.exports = router; // Exporta o roteador para ser utilizado em outros arquivos

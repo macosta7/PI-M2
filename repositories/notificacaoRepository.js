@@ -1,17 +1,7 @@
-const db = require("../config/db");
+const db = require("../config/db"); // Importa a configuração do banco de dados
 
-module.exports = {
-  async findByUsuario(id_usuario) {
-    const result = await db.query(`
-      SELECT *
-      FROM notificacoes
-      WHERE id_usuario = $1
-    `, [id_usuario]);
-
-    return result.rows;
-  },
-
-  async listarPorUsuario(id_usuario) {
+module.exports = { // Exporta um objeto com métodos para interagir com a tabela de notificações
+  async listarPorUsuario(id_usuario) { // Função para listar notificações por ID de usuário
     const result = await db.query(`
       SELECT 
         n.mensagem_notificacao,
@@ -29,17 +19,17 @@ module.exports = {
       ORDER BY r.data_reserva DESC;
     `, [id_usuario]);
 
-    return result.rows;
+    return result.rows; // Retorna as notificações encontradas
   },
 
 
-  async criar(data) {
+  async criar(data) { // Função para criar uma nova notificação
     const result = await db.query(`
       INSERT INTO notificacoes (id_usuario, id_reserva, mensagem_notificacao, visualizada_notificacao)
       VALUES ($1, $2, $3, false)
       RETURNING *;
     `, [data.id_usuario, data.id_reserva, data.mensagem_notificacao]);
 
-    return result.rows[0];
+    return result.rows[0]; // Retorna a notificação criada
   }
 };

@@ -1,14 +1,14 @@
-const db = require("../config/db");
-const schema = require("../models/usuarioModel");
+const db = require("../config/db"); // Importa a configuração do banco de dados
+const schema = require("../models/usuarioModel"); // Importa o esquema de validação do usuário
 
-function validate(data) {
-  const { error, value } = schema.validate(data);
+function validate(data) { // Função para validar os dados do usuário
+  const { error, value } = schema.validate(data); // Valida os dados usando o esquema definido
   if (error) throw error;
-  return value;
+  return value; // Retorna os dados validados
 }
 
-module.exports = {
-  async create(usuario) {
+module.exports = { // Exporta um objeto com métodos para interagir com a tabela de usuários
+  async create(usuario) { // Função para criar um novo usuário
     usuario = validate(usuario);
 
   const query = `
@@ -23,28 +23,28 @@ module.exports = {
     usuario.ocupacao_usuario,
   ];
 
-    const result = await db.query(query, values);
-    return result.rows[0];
+    const result = await db.query(query, values); // Executa a consulta no banco de dados
+    return result.rows[0]; // Retorna o usuário criado
   },
 
-  async findByEmail(email) {
+  async findByEmail(email) { // Função para buscar um usuário pelo email
     const query = `
       SELECT * FROM usuarios WHERE email_usuario = $1;
     `;
-    const result = await db.query(query, [email]);
-    return result.rows[0] || null;
+    const result = await db.query(query, [email]); // Executa a consulta no banco de dados
+    return result.rows[0] || null; // Retorna o usuário encontrado ou null se não encontrado
   },
 
-  async findById(id) {
+  async findById(id) { // Função para buscar um usuário pelo ID
     const query = `
       SELECT * FROM usuarios WHERE id_usuario = $1;
     `;
-    const result = await db.query(query, [id]);
-    return result.rows[0] || null;
+    const result = await db.query(query, [id]); // Executa a consulta no banco de dados
+    return result.rows[0] || null; // Retorna o usuário encontrado ou null se não encontrado
   },
 
-  async update(id, payload) {
-    payload = validate(payload);
+  async update(id, payload) { // Função para atualizar um usuário
+    payload = validate(payload); // Valida os dados do usuário
 
     const query = `
       UPDATE usuarios
@@ -60,12 +60,12 @@ module.exports = {
       id
     ];
 
-    const result = await db.query(query, values);
-    return result.rows[0];
+    const result = await db.query(query, values); // Executa a consulta no banco de dados
+    return result.rows[0]; // Retorna o usuário atualizado
   },
 
-  async remove(id) {
+  async remove(id) { // Função para remover um usuário
     const query = `DELETE FROM usuarios WHERE id_usuario = $1`;
-    await db.query(query, [id]);
+    await db.query(query, [id]); // Executa a consulta no banco de dados
   }
 };
