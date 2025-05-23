@@ -18,43 +18,61 @@ Sistema web para automação do processo de **reserva de salas em ambientes acad
 
 ## 📁 Estrutura de Pastas
 
-mvc-boilerplate/      
-│      
-├── config/ # Configurações, como conexão com o banco de dados     
-│ └── db.js     
-├── controllers/ # Lógica das requisições HTTP     
-│ └── aboutController.js      
-│ └── contactController.js      
-│ └── homeController.js      
-│ └── userController.js      
-├── models/ # Definições das entidades do banco (ORM ou SQL)       
-│ └── userModel.js       
-├── routes/ # Arquivos de rotas do sistema       
-│ └── index.js      
-│ └── frontRoutes.js       
-│ └── userRoutes.js       
-├── services/ # Funções reutilizáveis e lógicas de negócio        
-│ └── userService.js        
-├── assets/ # Imagens, fontes e arquivos públicos       
-├── scripts/ # Scripts JS públicos (front-end)       
-├── public/      
-│ └── css/       
-│ └─────style.css # Estilos CSS      
-├── tests/ # Testes unitários com Jest      
-│ └── userController.test.js      
-│ └── userModel.test.js     
-│ └── userRoutes.test.js       
-│ └── userService.test.js       
-├── views/ # Vizualização da aplicação       
-├── .gitignore # Arquivos/ pastas ignorados pelo Git       
-├── .env # Variáveis de ambiente       
-├── jest.config.js # Configuração do Jest para testes      
-├── package-lock.json # Lockfile do npm     
-├── package.json # Dependências e scripts do Node.js      
-├── PI-WAD.md # Arquivo da documentação do projeto     
-├── readme.md # Documentação do projeto      
-├── server.js # Inicialização do servidor Express      
-└── rest.http # Arquivo opcional para testes de API via VSCode      
+PI-M2/      
+├── config/                         # Configurações gerais
+│   └── db.js                      # Conexão com o banco de dados PostgreSQL
+│
+├── controllers/                   # Lógica das requisições HTTP (entrada das rotas)
+│   └── ReservaController.js       
+│   └── UsuarioController.js       
+│   └── NotificacaoController.js   
+│
+├── models/                        # Esquemas de validação de dados com Joi
+│   └── reservaModel.js           
+│   └── usuarioModel.js
+│   └── notificacaoModel.js              
+│
+├── repositories/                  # Acesso ao banco de dados (consultas SQL)
+│   └── reservaRepository.js      
+│   └── usuarioRepository.js      
+│   └── notificacaoRepository.js  
+│
+├── routes/                        # Definição das rotas da aplicação
+│   └── reservas.js               
+│   └── usuarios.js               
+│   └── notificacoes.js  
+│   └── horarios.js
+│   └── salas.js         
+│
+├── services/                      # Regras de negócio e lógica entre controller e repository
+│   └── reservaService.js         
+│   └── usuarioService.js         
+│   └── notificacaoService.js     
+│
+├── views/                         # Arquivos EJS com as páginas da aplicação (front-end)
+│   └── login.ejs                 
+│   └── cadastro.ejs              
+│   └── reserva.ejs               
+│   └── painelAdmin.ejs           
+│   └── editarPerfil.ejs          
+│   └── notificacoes.ejs          
+│
+├── scripts/                       # Scripts utilitários opcionais
+│   └── init.sql                   # Script para criação/inicialização das tabelas
+│   └── runsql.js                  # Script para rodar o SQL via Node
+│
+├── public/                        # Arquivos públicos (CSS, imagens, etc)
+│   └── css/
+│       └── style.css              # Estilização da aplicação (não implementado ainda)
+│
+├── .env                           # Variáveis de ambiente (credenciais DB, porta, etc)
+├── .gitignore                     # Arquivos e pastas ignorados pelo Git
+├── package.json                   # Scripts e dependências do projeto
+├── package-lock.json              # Versões travadas das dependências
+├── server.js                      # Arquivo principal para iniciar o servidor Express
+├── readme.md                      # Documentação do projeto
+└── PI-WAD.md                      # Entregável da disciplina/documentação formal
+  
 
 ## ▶️ Como Executar o Projeto Localmente
 
@@ -71,8 +89,8 @@ mvc-boilerplate/
 1. **Clone o repositório**
 
 ```bash
-git clone https://github.com/macosta7/mvc-boilerplate.git
-cd mvc-boilerplate 
+git clone https://github.com/macosta7/PI-M2.git
+cd PI-M2
 ```  
 
 2. **Instale as dependências**
@@ -80,6 +98,10 @@ cd mvc-boilerplate
 npm install
 npm init -y
 npm install express ejs
+npm install joi
+npm install express-session
+npm install dotenv
+npm install pg
 ```  
 
 ### 🗃️ Inicializar o Banco de Dados
@@ -95,7 +117,7 @@ npm run init-db
 1. Inicie a aplicação com:
 
 ```bash
-node app.js
+node server.js
 ```
 
 2. O servidor estará rodando em:
