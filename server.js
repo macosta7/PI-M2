@@ -5,6 +5,8 @@ const session = require("express-session");
 const db = require('./config/db');
 const app = express();
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Configuração de view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
