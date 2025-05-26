@@ -1,20 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head><title>Login</title></head>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="/css/login.css">
+</head>
 <body>
-  <h1>Login</h1>
-  <form action="/login" method="POST">
-    <label>Email:</label>
-    <input type="email" name="email" required><br>
+  <div class="login-container">
+    <div class="login-imagem">
+      <img src="/img/salinha.png" alt="Foto da sala">
+    </div>
 
-    <label>Senha:</label>
-    <input type="password" name="senha" required><br>
+    <div class="login-formulario">
+      <img src="/img/checkin-room.png" class="logo" alt="Logo Checkin Room">
 
-    <button type="submit">Entrar</button>
-  </form>
-  <p>Não tem conta? <a href="/cadastro">Cadastre-se aqui</a></p>
-  <% if (typeof erro !== "undefined") { %>
-    <p style="color: red;"><%= erro %></p>
-  <% } %>
+      <form action="/login" method="POST">
+        <div class="input-icon email">
+          <input type="email" name="email" placeholder="Email" required>
+        </div>
+
+        <div class="input-icon senha">
+          <input type="password" name="senha" placeholder="Senha" required>
+        </div>
+
+        <button type="submit">LOGIN</button>
+      </form>
+
+      <p><a href="/cadastro">Ainda não tem conta?</a></p>
+    </div>
+  </div>
 </body>
 </html>
