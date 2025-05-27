@@ -1,47 +1,66 @@
 <!DOCTYPE html>
-<html>
-<head><title>Reserva de Sala</title></head>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reservar Sala</title>
+  <link rel="stylesheet" href="/css/reserva.css" />
+</head>
 <body>
-  
-  <div style="text-align: right; margin: 10px;">
-    <a href="/editar-perfil">
-      <button>Editar Perfil</button>
-    </a>
-    <a href="/notificacoes" style="margin-left: 10px;">
-      <button>Notificações</button>
-    </a>
+  <div class="header">
+    <img src="/img/checkin-room.png" alt="Logo Checkin Room" class="logo" />
+    <div class="header-icons">
+      <a href="/notificacoes"><img src="/img/sino.png" alt="Notificações" /></a>
+      <a href="/editar-perfil"><img src="/img/perfil.png" class="foto-perfil" alt="Perfil" /></a>
+    </div>
   </div>
 
-  <h1>Consultar horários disponíveis</h1>
-  <form action="/reserva/disponiveis" method="POST">
-    <label>Sala:</label>
+  <h1 class="titulo">Reservar Sala</h1>
+
+  <!-- Formulário de seleção de sala e data -->
+  <form class="sala-select-form" action="/reserva/disponiveis" method="POST">
     <select name="id_sala" required>
       <% salas.forEach(sala => { %>
-        <option value="<%= sala.id_sala %>" <%= sala.id_sala == salaSelecionada ? "selected" : "" %>><%= sala.nm_sala %></option>
+        <option value="<%= sala.id_sala %>" <%= sala.id_sala == salaSelecionada ? "selected" : "" %>>
+          <%= sala.nm_sala %>
+        </option>
       <% }) %>
-    </select><br>
+    </select>
 
-    <label>Data:</label>
-    <input type="date" name="data_reserva" value="<%= dataSelecionada || "" %>" required><br>
+    <input type="date" name="data_reserva" value="<%= dataSelecionada || "" %>" required>
 
-    <button type="submit">Buscar horários</button>
+    <button type="submit">Ver horários</button>
   </form>
 
+  <!-- Horários disponíveis -->
   <% if (typeof horarios !== 'undefined') { %>
-    <h2>Horários disponíveis:</h2>
-    <form action="/reserva" method="POST" onsubmit="console.log('Formulário de reserva enviado')">
-      <input type="hidden" name="id_sala" value="<%= salaSelecionada %>" />
-      <input type="hidden" name="data_reserva" value="<%= dataSelecionada %>" />
+    <div class="horarios-wrapper">
+      <div class="horarios">
+        <h3>
+          <%= new Date(dataSelecionada).toLocaleDateString('pt-BR', {
+            weekday: 'long',
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+          }) %>
+        </h3>
 
-      <label>Horário:</label>
-      <select name="id_horario" required>
-        <% horarios.forEach(h => { %>
-          <option value="<%= h.id_horario %>"><%= h.horario_inicio %> - <%= h.horario_fim %></option>
-        <% }) %>
-      </select><br>
+        <form action="/reserva" method="POST">
+          <input type="hidden" name="id_sala" value="<%= salaSelecionada %>" />
+          <input type="hidden" name="data_reserva" value="<%= dataSelecionada %>" />
 
-      <button type="submit">Reservar</button>
-    </form>
+          <% horarios.forEach(h => { %>
+            <div class="horario-linha">
+              <span><%= h.horario_inicio %> - <%= h.horario_fim %></span>
+              <% if (h.ocupado) { %>
+                <button type="button" class="btn-horario ocupado" disabled>Ocupado</button>
+              <% } else { %>
+                <button type="submit" name="id_horario" value="<%= h.id_horario %>" class="btn-horario">Reservar</button>
+              <% } %>
+            </div>
+          <% }) %>
+        </form>
+      </div>
+    </div>
   <% } %>
 </body>
 </html>

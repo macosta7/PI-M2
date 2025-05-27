@@ -1,0 +1,184 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #fff;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+}
+
+.logo {
+  width: 140px;
+}
+
+.header-icons {
+  display: flex;
+  gap: 20px;
+}
+
+.header-icons img {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
+.foto-perfil {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Título */
+.titulo {
+  text-align: center;
+  font-size: 24px;
+  margin: 20px 0;
+  color: #2E2640;
+}
+
+/* Formulário de sala + data */
+.sala-select-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.sala-select-form select,
+.sala-select-form input[type="date"],
+.sala-select-form button {
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #E84A4A;
+  background-color: #E84A4A;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+}
+
+.sala-select-form button {
+  background-color: #2E2640;
+  border-color: #2E2640;
+}
+
+.sala-select-form button:hover {
+  background-color: #1d1a2e;
+}
+
+/* Container geral de conteúdo */
+.reserva-container {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  padding: 30px 0;
+  flex-wrap: wrap;
+}
+
+/* Calendário */
+.calendario {
+  background-color: #2E2640;
+  padding: 20px;
+  border-radius: 12px;
+  color: white;
+  width: 300px;
+  box-shadow: 4px 4px 0px #1d1a2e;
+}
+
+.calendario h3 {
+  margin-bottom: 20px;
+  background-color: #E84A4A;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.calendario form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.calendario input[type="date"],
+.calendario button {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+}
+
+.calendario button {
+  background-color: #E84A4A;
+  color: white;
+  cursor: pointer;
+}
+
+/* Horários */
+.horarios {
+  background-color: #2E2640;
+  padding: 20px;
+  border-radius: 12px;
+  color: white;
+  width: 300px;
+  box-shadow: 4px 4px 0px #1d1a2e;
+}
+
+.horarios h3 {
+  margin-bottom: 20px;
+  background-color: #E84A4A;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.horario-linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3A2E55;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.horario-linha span {
+  color: white;
+}
+
+.btn-horario {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-horario.ocupado {
+  background-color: #E84A4A;
+  color: white;
+}
+
+.btn-horario:not(.ocupado) {
+  background-color: #6EF38D;
+  color: #2E2640;
+}
+
+.horarios-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}

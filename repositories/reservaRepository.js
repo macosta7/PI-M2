@@ -31,19 +31,23 @@ module.exports = { // Exporta um objeto com métodos para interagir com a tabela
     return result.rows; // Retorna os horários encontrados
   },
   
-  async buscarHorariosDisponiveis(id_sala, data_reserva) { // Função para buscar horários disponíveis para uma sala e data específicas
+  async buscarHorariosDisponiveis(id_sala, data_reserva) {
     const result = await db.query(`
-        SELECT h.*
-        FROM horarios h
-        WHERE h.id_horario NOT IN (
-        SELECT r.id_horario
-        FROM reservas r
-        WHERE r.id_sala = $1 AND r.data_reserva = $2
-        )
-        ORDER BY h.horario_inicio;
+      SELECT 
+        h.*, 
+        CASE 
+          WHEN r.id_horario IS NOT NULL THEN true
+          ELSE false
+        END AS ocupado
+      FROM horarios h
+      LEFT JOIN reservas r 
+        ON r.id_horario = h.id_horario 
+      AND r.id_sala = $1 
+      AND r.data_reserva = $2
+      ORDER BY h.horario_inicio;
     `, [id_sala, data_reserva]);
 
-    return result.rows; // Retorna os horários disponíveis
+    return result.rows;
   },
 
   async listarPendentesComUsuarioSala() { // Função para listar reservas pendentes com informações de usuário e sala
