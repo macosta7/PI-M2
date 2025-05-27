@@ -10,7 +10,41 @@
   <div class="header">
     <img src="/img/checkin-room.png" alt="Logo Checkin Room" class="logo" />
     <div class="header-icons">
-      <a href="/notificacoes"><img src="/img/sino.png" alt="Notificações" class="icone-sino" /></a>
+      <div class="notification-container">
+        <img src="/img/sino.png" alt="Notificações" class="icone-sino" id="notification-bell" />
+        <% if (typeof notificacoes !== 'undefined' && notificacoes.length > 0) { %>
+          <span class="notification-badge"><%= notificacoes.length %></span>
+        <% } %>
+
+        <!-- Pop-up de notificações -->
+        <div class="notification-popup" id="notification-popup">
+          <div class="notification-header">
+            <h3>Notificações</h3>
+          </div>
+          <div class="notification-content">
+            <% if (typeof notificacoes !== 'undefined' && notificacoes.length > 0) { %>
+              <% notificacoes.forEach(n => { %>
+                <div class="notification-item">
+                  <div class="notification-status <%= n.status_reserva === 'aprovada' ? 'aprovada' : 'rejeitada' %>">
+                    <%= n.status_reserva === 'aprovada' ? '✅' : '❌' %>
+                  </div>
+                  <div class="notification-details">
+                    <div class="notification-text">
+                      <strong>Sala <%= n.nm_sala %></strong><br>
+                      <%= new Date(n.data_reserva).toLocaleDateString('pt-BR') %><br>
+                      <%= n.horario_inicio %> - <%= n.horario_fim %>
+                    </div>
+                  </div>
+                </div>
+              <% }) %>
+            <% } else { %>
+              <div class="no-notifications">
+                <p>Nenhuma notificação encontrada</p>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
       <a href="/editar-perfil"><img src="/img/perfil.png" class="foto-perfil" alt="Perfil" /></a>
     </div>
   </div>
@@ -104,6 +138,58 @@
     function formatDate(date) {
       return date.toISOString().split('T')[0];
     }
+
+    // JavaScript para o popup de notificações
+    document.addEventListener('DOMContentLoaded', function() {
+      const notificationBell = document.getElementById('notification-bell');
+      const notificationPopup = document.getElementById('notification-popup');
+      let isPopupVisible = false;
+
+      // Toggle popup ao clicar no sino
+      notificationBell.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (isPopupVisible) {
+          hideNotificationPopup();
+        } else {
+          showNotificationPopup();
+        }
+      });
+
+      // Manter popup visível ao passar o mouse sobre ele
+      notificationPopup.addEventListener('mouseenter', function() {
+        clearTimeout(notificationPopup.hideTimeout);
+      });
+
+      // Esconder popup ao sair com o mouse (com delay)
+      notificationPopup.addEventListener('mouseleave', function() {
+        notificationPopup.hideTimeout = setTimeout(hideNotificationPopup, 300);
+      });
+
+      // Esconder popup ao clicar fora
+      document.addEventListener('click', function(e) {
+        if (!notificationBell.contains(e.target) && !notificationPopup.contains(e.target)) {
+          hideNotificationPopup();
+        }
+      });
+
+      function showNotificationPopup() {
+        notificationPopup.style.display = 'block';
+        setTimeout(() => {
+          notificationPopup.classList.add('show');
+        }, 10);
+        isPopupVisible = true;
+      }
+
+      function hideNotificationPopup() {
+        notificationPopup.classList.remove('show');
+        setTimeout(() => {
+          notificationPopup.style.display = 'none';
+        }, 300);
+        isPopupVisible = false;
+      }
+    });
 
     function updateCalendar() {
       const mesAno = document.getElementById('mes-ano');

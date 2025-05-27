@@ -1,10 +1,20 @@
 const reservaService = require("../services/reservaService"); // Importa o serviço de reserva
+const notificacaoService = require("../services/notificacaoService"); // Importa o serviço de notificação
 
 exports.renderForm = async (req, res) => { // Função para renderizar o formulário de reserva
   try {
+    const id_usuario = req.session.id_usuario; // Obtém o ID do usuário da sessão
+
+    if (!id_usuario) {
+      return res.redirect("/login"); // Redireciona para a página de login se o ID do usuário não estiver na sessão
+    }
+
     const salas = await reservaService.getSalasDisponiveis(); // Chama o serviço para obter as salas disponíveis
+    const notificacoes = await notificacaoService.listarPorUsuario(id_usuario); // Chama o serviço para obter as notificações do usuário
+
     res.render("reserva", { // Renderiza a página de reserva com as salas disponíveis
       salas,
+      notificacoes,
       salaSelecionada: null,
       dataSelecionada: null,
       horarios: undefined,
@@ -26,10 +36,13 @@ exports.create = async (req, res) => { // Função para criar uma nova reserva
 
     res.redirect("/reserva"); // Redireciona para a página de reserva após criar a reserva
   } catch (e) {
+    const id_usuario = req.session.id_usuario; // Obtém o ID do usuário da sessão
     const salas = await reservaService.getSalasDisponiveis(); // Chama o serviço para obter as salas disponíveis
+    const notificacoes = await notificacaoService.listarPorUsuario(id_usuario); // Chama o serviço para obter as notificações do usuário
 
     res.status(400).render("reserva", { // Renderiza a página de reserva com os dados obtidos
       salas,
+      notificacoes,
       salaSelecionada: req.body.id_sala,
       dataSelecionada: req.body.data_reserva,
       horarios: await reservaService.getHorariosDisponiveisParaSalaEData(req.body.id_sala, req.body.data_reserva),
@@ -41,12 +54,19 @@ exports.create = async (req, res) => { // Função para criar uma nova reserva
 exports.buscarHorariosDisponiveis = async (req, res) => { // Função para buscar horários disponíveis
   try {
     const { id_sala, data_reserva } = req.body; // Obtém os dados do corpo da requisição
+    const id_usuario = req.session.id_usuario; // Obtém o ID do usuário da sessão
+
+    if (!id_usuario) {
+      return res.redirect("/login"); // Redireciona para a página de login se o ID do usuário não estiver na sessão
+    }
 
     const salas = await reservaService.getSalasDisponiveis(); // Chama o serviço para obter as salas disponíveis
     const horarios = await reservaService.getHorariosDisponiveisParaSalaEData(id_sala, data_reserva); // Chama o serviço para obter os horários disponíveis
+    const notificacoes = await notificacaoService.listarPorUsuario(id_usuario); // Chama o serviço para obter as notificações do usuário
 
     res.render("reserva", { // Renderiza a página de reserva com os dados obtidos
       salas,
+      notificacoes,
       horarios,
       salaSelecionada: id_sala,
       dataSelecionada: data_reserva
