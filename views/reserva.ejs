@@ -6,61 +6,198 @@
   <link rel="stylesheet" href="/css/reserva.css" />
 </head>
 <body>
+  <!-- Header -->
   <div class="header">
     <img src="/img/checkin-room.png" alt="Logo Checkin Room" class="logo" />
     <div class="header-icons">
-      <a href="/notificacoes"><img src="/img/sino.png" alt="Notificações" /></a>
+      <a href="/notificacoes"><img src="/img/sino.png" alt="Notificações" class="icone-sino" /></a>
       <a href="/editar-perfil"><img src="/img/perfil.png" class="foto-perfil" alt="Perfil" /></a>
     </div>
   </div>
 
+  <!-- Título centralizado -->
   <h1 class="titulo">Reservar Sala</h1>
 
-  <!-- Formulário de seleção de sala e data -->
-  <form class="sala-select-form" action="/reserva/disponiveis" method="POST">
-    <select name="id_sala" required>
-      <% salas.forEach(sala => { %>
-        <option value="<%= sala.id_sala %>" <%= sala.id_sala == salaSelecionada ? "selected" : "" %>>
-          <%= sala.nm_sala %>
-        </option>
-      <% }) %>
-    </select>
+  <!-- Formulário de seleção de sala -->
+  <div class="sala-selector-container">
+    <form class="sala-select-form" action="/reserva/disponiveis" method="POST" id="salaForm">
+      <select name="id_sala" id="sala-select" required>
+        <option value="">Selecione uma sala...</option>
+        <% salas.forEach(sala => { %>
+          <option value="<%= sala.id_sala %>" <%= sala.id_sala == salaSelecionada ? "selected" : "" %>>
+            <%= sala.nm_sala %>
+          </option>
+        <% }) %>
+      </select>
+      <input type="hidden" name="data_reserva" id="data-hidden" value="<%= dataSelecionada || '' %>" />
+    </form>
+  </div>
 
-    <input type="date" name="data_reserva" value="<%= dataSelecionada || "" %>" required>
-
-    <button type="submit">Ver horários</button>
-  </form>
-
-  <!-- Horários disponíveis -->
-  <% if (typeof horarios !== 'undefined') { %>
-    <div class="horarios-wrapper">
-      <div class="horarios">
-        <h3>
-          <%= new Date(dataSelecionada).toLocaleDateString('pt-BR', {
-            weekday: 'long',
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-          }) %>
-        </h3>
-
-        <form action="/reserva" method="POST">
-          <input type="hidden" name="id_sala" value="<%= salaSelecionada %>" />
-          <input type="hidden" name="data_reserva" value="<%= dataSelecionada %>" />
-
-          <% horarios.forEach(h => { %>
-            <div class="horario-linha">
-              <span><%= h.horario_inicio %> - <%= h.horario_fim %></span>
-              <% if (h.ocupado) { %>
-                <button type="button" class="btn-horario ocupado" disabled>Ocupado</button>
-              <% } else { %>
-                <button type="submit" name="id_horario" value="<%= h.id_horario %>" class="btn-horario">Reservar</button>
-              <% } %>
-            </div>
-          <% }) %>
-        </form>
+  <!-- Container principal com calendário e horários -->
+  <div class="main-container">
+    <!-- Calendário -->
+    <div class="calendario-container">
+      <div class="calendario">
+        <div class="calendario-header">
+          <button type="button" class="nav-btn" id="prev-month">&lt;</button>
+          <h3 id="mes-ano"></h3>
+          <button type="button" class="nav-btn" id="next-month">&gt;</button>
+        </div>
+        <div class="calendario-grid">
+          <div class="dia-semana">Dom</div>
+          <div class="dia-semana">Seg</div>
+          <div class="dia-semana">Ter</div>
+          <div class="dia-semana">Qua</div>
+          <div class="dia-semana">Qui</div>
+          <div class="dia-semana">Sex</div>
+          <div class="dia-semana">Sáb</div>
+          <!-- Dias serão inseridos via JavaScript -->
+        </div>
       </div>
     </div>
-  <% } %>
+
+    <!-- Horários -->
+    <div class="horarios-container">
+      <% if (typeof horarios !== 'undefined' && dataSelecionada) { %>
+        <div class="horarios">
+          <h3 class="data-selecionada">
+            <%= new Date(dataSelecionada).toLocaleDateString('pt-BR', {
+              weekday: 'long',
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric'
+            }) %>
+          </h3>
+
+          <form action="/reserva" method="POST" class="horarios-form">
+            <input type="hidden" name="id_sala" value="<%= salaSelecionada %>" />
+            <input type="hidden" name="data_reserva" value="<%= dataSelecionada %>" />
+
+            <% horarios.forEach(h => { %>
+              <div class="horario-linha">
+                <div class="horario-info">
+                  <span class="icone-relogio">🕐</span>
+                  <span class="horario-texto"><%= h.horario_inicio %> - <%= h.horario_fim %></span>
+                </div>
+                <% if (h.ocupado) { %>
+                  <button type="button" class="btn-horario ocupado" disabled>Ocupado</button>
+                <% } else { %>
+                  <button type="submit" name="id_horario" value="<%= h.id_horario %>" class="btn-horario disponivel">Reservar</button>
+                <% } %>
+              </div>
+            <% }) %>
+          </form>
+        </div>
+      <% } else { %>
+        <div class="horarios-placeholder">
+          <p>Selecione uma sala e uma data para ver os horários disponíveis</p>
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript para o calendário
+    let currentDate = new Date();
+    let selectedDate = '<%= dataSelecionada || "" %>';
+
+    function formatDate(date) {
+      return date.toISOString().split('T')[0];
+    }
+
+    function updateCalendar() {
+      const mesAno = document.getElementById('mes-ano');
+      const grid = document.querySelector('.calendario-grid');
+
+      // Atualizar header do mês/ano
+      mesAno.textContent = currentDate.toLocaleDateString('pt-BR', {
+        month: 'long',
+        year: 'numeric'
+      });
+
+      // Limpar dias anteriores (manter cabeçalhos dos dias da semana)
+      const diasSemana = grid.querySelectorAll('.dia-semana');
+      grid.innerHTML = '';
+      diasSemana.forEach(dia => grid.appendChild(dia));
+
+      // Calcular primeiro dia do mês e quantos dias tem
+      const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+      const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+      const startDate = firstDay.getDay(); // 0 = domingo
+
+      // Adicionar dias vazios no início
+      for (let i = 0; i < startDate; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'dia-vazio';
+        grid.appendChild(emptyDay);
+      }
+
+      // Adicionar dias do mês
+      for (let day = 1; day <= lastDay.getDate(); day++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'dia';
+        dayElement.textContent = day;
+
+        const dayDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+        const dayDateStr = formatDate(dayDate);
+
+        // Marcar data selecionada
+        if (dayDateStr === selectedDate) {
+          dayElement.classList.add('selecionado');
+        }
+
+        // Desabilitar datas passadas
+        if (dayDate < new Date().setHours(0,0,0,0)) {
+          dayElement.classList.add('passado');
+        } else {
+          dayElement.addEventListener('click', () => selectDate(dayDateStr, dayElement));
+        }
+
+        grid.appendChild(dayElement);
+      }
+    }
+
+    function selectDate(dateStr, element) {
+      // Remover seleção anterior
+      document.querySelectorAll('.dia.selecionado').forEach(el => el.classList.remove('selecionado'));
+
+      // Adicionar seleção atual
+      element.classList.add('selecionado');
+      selectedDate = dateStr;
+
+      // Atualizar campo hidden
+      document.getElementById('data-hidden').value = dateStr;
+
+      // Submeter formulário se sala estiver selecionada
+      const salaSelect = document.getElementById('sala-select');
+      if (salaSelect.value) {
+        document.getElementById('salaForm').submit();
+      }
+    }
+
+    // Event listeners para navegação do calendário
+    document.getElementById('prev-month').addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      updateCalendar();
+    });
+
+    document.getElementById('next-month').addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      updateCalendar();
+    });
+
+    // Event listener para mudança de sala
+    document.getElementById('sala-select').addEventListener('change', function() {
+      if (this.value && selectedDate) {
+        document.getElementById('salaForm').submit();
+      }
+    });
+
+    // Inicializar calendário
+    if (selectedDate) {
+      currentDate = new Date(selectedDate);
+    }
+    updateCalendar();
+  </script>
 </body>
 </html>

@@ -1,32 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+  <meta charset="UTF-8" />
   <title>Notificações</title>
+  <link rel="stylesheet" href="/css/notificacoes.css" />
 </head>
 <body>
-  <div style="text-align: right; margin: 10px;">
-    <a href="/editar-perfil">
-      <button>Editar Perfil</button>
-    </a>
-    <a href="/reserva">
-      <button>Voltar</button>
-    </a>
+  <div class="header">
+    <img src="/img/checkin-room.png" alt="Logo Checkin Room" class="logo" />
+    <div class="header-icons">
+      <a href="/reserva"><img src="/img/voltar.png" alt="Voltar" class="icone" /></a>
+      <a href="/editar-perfil"><img src="/img/perfil.png" class="icone perfil" alt="Perfil" /></a>
+    </div>
   </div>
 
-  <h1>Suas Notificações</h1>
+  <h1 class="titulo">Notificações</h1>
 
-  <% if (notificacoes.length === 0) { %>
-    <p>Você não possui notificações.</p>
-  <% } else { %>
-    <% notificacoes.forEach(n => { %>
-      <div style="border:1px solid #ccc; padding:10px; margin:10px;">
-        <p><strong>Sala:</strong> <%= n.nm_sala %></p>
-        <p><strong>Data:</strong> <%= new Date(n.data_reserva).toLocaleDateString() %></p>
-        <p><strong>Horário:</strong> <%= n.horario_inicio %> - <%= n.horario_fim %></p>
-        <p><strong>Status:</strong>  <%= n.status_reserva %></p>
-        <p><strong>Mensagem:</strong> <%= n.mensagem_notificacao %></p>
-      </div>
-    <% }) %>
-  <% } %>
+  <div class="notificacoes-container">
+    <% if (notificacoes.length === 0) { %>
+      <p class="sem-notificacao">Você não possui notificações.</p>
+    <% } else { %>
+      <% notificacoes.forEach(n => { %>
+        <div class="notificacao-box">
+          <div class="status-icone <%= n.status_reserva === 'aprovada' ? 'verde' : 'vermelho' %>">
+            <%= n.status_reserva === 'aprovada' ? '✔' : '✖' %>
+          </div>
+          <div class="notificacao-info">
+            Sala <%= n.nm_sala %> | 
+            <%= new Date(n.data_reserva).toLocaleDateString('pt-BR') %> | 
+            <%= n.horario_inicio %> - <%= n.horario_fim %>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
 </body>
 </html>
