@@ -103,6 +103,7 @@ npm install joi
 npm install express-session
 npm install dotenv
 npm install pg
+npm install multer uuid
 ```  
 
 ### 🗃️ Inicializar o Banco de Dados
