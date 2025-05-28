@@ -130,7 +130,7 @@ CREATE TABLE notificacoes (
 
 O sistema utiliza um banco de dados relacional PostgreSQL hospedado na plataforma Supabase. Os dados do sistema estão organizados em tabelas com as seguintes entidades principais:
 
-#### 🧾 Entidades do Banco de Dados
+#### Entidades do Banco de Dados
 
 - **usuarios**
   - `id_usuario` (PK): Identificador único do usuário
@@ -165,7 +165,7 @@ O sistema utiliza um banco de dados relacional PostgreSQL hospedado na plataform
   - `visualizada_notificacao`: Booleano que indica se a notificação já foi lida
   - `data_criacao`: Data/hora em que a notificação foi criada
 
-#### ✅ Models com Validação (Joi)
+#### Models com Validação (Joi)
 
 Além da modelagem no banco de dados, o sistema implementa validações em nível de aplicação por meio da biblioteca `Joi`. Os arquivos de validação estão localizados na pasta `models/`:
 
@@ -187,7 +187,7 @@ O sistema web segue uma arquitetura baseada no padrão **MVC estendido**, com se
 
 ---
 
-#### 🔁 Fluxo de Dados
+#### Fluxo de Dados
 
 - **Views**: arquivos `.ejs` localizados na pasta `views/`. São responsáveis por exibir o conteúdo ao usuário e coletar entradas de dados (login, cadastro, reservas, etc).
 
@@ -203,7 +203,7 @@ O sistema web segue uma arquitetura baseada no padrão **MVC estendido**, com se
 
 ---
 
-#### 📌 Resumo dos fluxos principais
+#### Resumo dos fluxos principais
 
 - **Login e Cadastro**: dados entram via `login.ejs` e `cadastro.ejs`, passam pelo `UsuarioController`, são validados via `usuarioModel` e persistidos via `usuarioRepository`.
 
@@ -237,12 +237,12 @@ O sistema web segue uma arquitetura baseada no padrão **MVC estendido**, com se
 
 O guia de estilos do sistema **Checkin Room** foi desenvolvido para garantir consistência visual, acessibilidade e clareza na interação com o usuário. Abaixo estão os principais elementos que compõem o estilo visual da aplicação:
 
-#### ✅ Tipografia
+#### Tipografia
 
 * **Fonte principal:** Utilizada em títulos, botões e textos importantes.
 * **Hierarquia:** H1, H2, H3 e parágrafos organizam a informação por importância.
 
-#### ✅ Paleta de Cores
+#### Paleta de Cores
 
 | Cor         | Código    | Uso                                             |
 | ----------- | --------- | ----------------------------------------------- |
@@ -252,7 +252,7 @@ O guia de estilos do sistema **Checkin Room** foi desenvolvido para garantir con
 | Cinza claro | `#C1ADAD` | Divisores e elementos de apoio                  |
 | Branco      | `#FFFFFF` | Fundo e contraste                               |
 
-#### ✅ Ícones
+#### Ícones
 
 * **Envelope:** Campo de e-mail
 * **Pessoa:** Campo de nome
@@ -262,12 +262,12 @@ O guia de estilos do sistema **Checkin Room** foi desenvolvido para garantir con
 * **Sino:** Acessar notificações
 * **✔️ / ❌:** Indicam aprovação ou rejeição da reserva
 
-#### ✅ Layout e Estética
+#### Layout e Estética
 
 * A interface é limpa, com espaçamento adequado e botões grandes e clicáveis.
 * Cada componente visual (botões, campos de texto, modais) segue padrões definidos, otimizando a experiência do usuário e facilitando a navegação.
 
-#### 📎 Guia Visual
+#### Guia Visual
 
 <div align="center">
   <sub>Guia de Estilos</sub><br>
@@ -305,7 +305,7 @@ Aqui estão descritos todos os endpoints implementados no sistema Checkin Room. 
 
 ---
 
-#### 🔐 Autenticação e Usuários (`/usuarios`)
+#### Autenticação e Usuários (`/usuarios`)
 
 | Método | Rota              | Descrição                                     |
 |--------|-------------------|-----------------------------------------------|
@@ -319,7 +319,7 @@ Aqui estão descritos todos os endpoints implementados no sistema Checkin Room. 
 
 ---
 
-#### 🏢 Reservas (`/reserva` e `/reservas`)
+#### Reservas (`/reserva` e `/reservas`)
 
 | Método | Rota                         | Descrição                                       |
 |--------|------------------------------|-------------------------------------------------|
@@ -329,7 +329,7 @@ Aqui estão descritos todos os endpoints implementados no sistema Checkin Room. 
 
 ---
 
-#### 🧾 Painel da Recepção (`/painel-admin`)
+#### Painel da Recepção (`/painel-admin`)
 
 | Método | Rota                                | Descrição                               |
 |--------|-------------------------------------|-----------------------------------------|
@@ -339,7 +339,7 @@ Aqui estão descritos todos os endpoints implementados no sistema Checkin Room. 
 
 ---
 
-#### 🔔 Notificações (`/notificacoes`)
+#### Notificações (`/notificacoes`)
 
 | Método | Rota                | Descrição                                           |
 |--------|---------------------|-----------------------------------------------------|
@@ -347,7 +347,7 @@ Aqui estão descritos todos os endpoints implementados no sistema Checkin Room. 
 
 ---
 
-> 🔐 **Observação:** o sistema utiliza `express-session` para manter a sessão de login e validar qual usuário está autenticado nas rotas protegidas.
+> **Observação:** o sistema utiliza `express-session` para manter a sessão de login e validar qual usuário está autenticado nas rotas protegidas.
 
 ### 3.7 Interface e Navegação (Semana 07)
 
