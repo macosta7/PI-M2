@@ -8,7 +8,9 @@
 <body>
   <!-- Header -->
   <div class="header">
-    <img src="/img/checkin-room.png" alt="Logo Checkin Room" class="logo" />
+    <a href="/login" class="logo-link">
+      <img src="/img/checkin-room.png" alt="Logo Checkin Room" class="logo" />
+    </a>
     <div class="header-icons">
       <div class="notification-container">
         <img src="/img/sino.png" alt="Notificações" class="icone-sino" id="notification-bell" />
@@ -45,7 +47,7 @@
           </div>
         </div>
       </div>
-      <a href="/editar-perfil"><img src="/img/perfil.png" class="foto-perfil" alt="Perfil" /></a>
+      <a href="/editar-perfil"><img src="<%= usuario.foto_perfil || '/img/perfil.png' %>" class="foto-perfil" alt="Perfil" /></a>
     </div>
   </div>
 

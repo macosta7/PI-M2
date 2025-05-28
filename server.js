@@ -6,6 +6,7 @@ const db = require('./config/db');
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Configuração de view engine
 app.set('view engine', 'ejs');

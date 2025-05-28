@@ -12,15 +12,16 @@ module.exports = { // Exporta um objeto com métodos para interagir com a tabela
     usuario = validate(usuario);
 
   const query = `
-    INSERT INTO usuarios (nm_usuario, email_usuario, senha_usuario, ocupacao_usuario)
-    VALUES ($1, $2, $3, $4)
+    INSERT INTO usuarios (nm_usuario, email_usuario, senha_usuario, ocupacao_usuario, foto_perfil)
+    VALUES ($1, $2, $3, $4, $5)
     RETURNING *;
   `;
   const values = [
-    usuario.nome,        
+    usuario.nome,
     usuario.email_usuario,
     usuario.senha_usuario,
     usuario.ocupacao_usuario,
+    usuario.foto_perfil || null,
   ];
 
     const result = await db.query(query, values); // Executa a consulta no banco de dados
@@ -48,8 +49,8 @@ module.exports = { // Exporta um objeto com métodos para interagir com a tabela
 
     const query = `
       UPDATE usuarios
-      SET nm_usuario = $1, email_usuario = $2, senha_usuario = $3, ocupacao_usuario = $4
-      WHERE id_usuario = $5
+      SET nm_usuario = $1, email_usuario = $2, senha_usuario = $3, ocupacao_usuario = $4, foto_perfil = $5
+      WHERE id_usuario = $6
       RETURNING *;
     `;
     const values = [
@@ -57,6 +58,7 @@ module.exports = { // Exporta um objeto com métodos para interagir com a tabela
       payload.email_usuario,
       payload.senha_usuario,
       payload.ocupacao_usuario,
+      payload.foto_perfil || null,
       id
     ];
 

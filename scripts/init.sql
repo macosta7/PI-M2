@@ -3,7 +3,8 @@ CREATE TABLE usuarios (
   nm_usuario TEXT NOT NULL,
   email_usuario TEXT UNIQUE NOT NULL,
   ocupacao_usuario TEXT NOT NULL CHECK (ocupacao_usuario IN ('aluno', 'professor', 'coordenador', 'recepcao')),
-  senha_usuario TEXT NOT NULL
+  senha_usuario TEXT NOT NULL,
+  foto_perfil TEXT
 );
 
 CREATE TABLE salas (

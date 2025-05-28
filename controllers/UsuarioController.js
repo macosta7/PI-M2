@@ -1,7 +1,13 @@
 const usuarioService = require("../services/usuarioService"); // Importa o serviço de usuário
+const upload = require("../config/multer"); // Importa a configuração do multer
 
 exports.create = async (req, res) => { // Função para criar um novo usuário
   try {
+    // Adiciona o caminho da foto de perfil se foi enviada
+    if (req.file) {
+      req.body.foto_perfil = `/uploads/${req.file.filename}`;
+    }
+
     await usuarioService.create(req.body); // Chama o serviço para criar o usuário
     res.redirect("/login"); // Redireciona para a página de login após criar o usuário
   } catch (e) {
@@ -64,6 +70,11 @@ exports.update = async (req, res) => { // Função para atualizar o perfil do us
   if (!id) return res.redirect('/login'); // Redireciona para a página de login se o ID do usuário não estiver na sessão
 
   try {
+    // Adiciona o caminho da foto de perfil se foi enviada
+    if (req.file) {
+      req.body.foto_perfil = `/uploads/${req.file.filename}`;
+    }
+
     await usuarioService.update(id, req.body); // Chama o serviço para atualizar o usuário
     res.redirect('/reserva'); // Redireciona para a página de reserva após atualizar o usuário
   } catch (e) {

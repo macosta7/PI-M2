@@ -13,15 +13,21 @@
     <div class="cadastro-formulario">
       <img src="/img/checkin-room.png" class="logo" alt="Logo Checkin Room" />
 
-      <div class="foto-perfil">
-        <img src="/img/perfil.png" alt="Foto de perfil" />
+      <div class="foto-perfil-container">
+        <div class="foto-perfil">
+          <img src="/img/perfil.jpg" alt="Foto de perfil" id="preview-image" />
+          <div class="upload-overlay" onclick="document.getElementById('foto-perfil-input').click()">
+            <span class="upload-icon">+</span>
+          </div>
+        </div>
       </div>
 
       <% if (typeof erro !== 'undefined') { %>
         <p style="color: red;"><%= erro %></p>
       <% } %>
 
-      <form action="/usuarios" method="POST">
+      <form action="/usuarios" method="POST" enctype="multipart/form-data">
+        <input type="file" id="foto-perfil-input" name="foto_perfil" accept="image/*" style="display: none;" onchange="previewImage(this)">
         <input type="text" name="nome" placeholder="Nome completo" required>
 
         <input type="email" name="email_usuario" placeholder="Email" required>
@@ -42,5 +48,19 @@
       <p><a href="/login">Já possui conta?</a></p>
     </div>
   </div>
+
+  <script>
+    function previewImage(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          document.getElementById('preview-image').src = e.target.result;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  </script>
 </body>
 </html>

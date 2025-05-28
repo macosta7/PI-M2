@@ -1,5 +1,6 @@
 const reservaService = require("../services/reservaService"); // Importa o serviço de reserva
 const notificacaoService = require("../services/notificacaoService"); // Importa o serviço de notificação
+const usuarioService = require("../services/usuarioService"); // Importa o serviço de usuário
 
 exports.renderForm = async (req, res) => { // Função para renderizar o formulário de reserva
   try {
@@ -11,10 +12,12 @@ exports.renderForm = async (req, res) => { // Função para renderizar o formul�
 
     const salas = await reservaService.getSalasDisponiveis(); // Chama o serviço para obter as salas disponíveis
     const notificacoes = await notificacaoService.listarPorUsuario(id_usuario); // Chama o serviço para obter as notificações do usuário
+    const usuario = await usuarioService.detail(id_usuario); // Chama o serviço para obter os detalhes do usuário
 
     res.render("reserva", { // Renderiza a página de reserva com as salas disponíveis
       salas,
       notificacoes,
+      usuario,
       salaSelecionada: null,
       dataSelecionada: null,
       horarios: undefined,
@@ -39,10 +42,12 @@ exports.create = async (req, res) => { // Função para criar uma nova reserva
     const id_usuario = req.session.id_usuario; // Obtém o ID do usuário da sessão
     const salas = await reservaService.getSalasDisponiveis(); // Chama o serviço para obter as salas disponíveis
     const notificacoes = await notificacaoService.listarPorUsuario(id_usuario); // Chama o serviço para obter as notificações do usuário
+    const usuario = await usuarioService.detail(id_usuario); // Chama o serviço para obter os detalhes do usuário
 
     res.status(400).render("reserva", { // Renderiza a página de reserva com os dados obtidos
       salas,
       notificacoes,
+      usuario,
       salaSelecionada: req.body.id_sala,
       dataSelecionada: req.body.data_reserva,
       horarios: await reservaService.getHorariosDisponiveisParaSalaEData(req.body.id_sala, req.body.data_reserva),
@@ -63,10 +68,12 @@ exports.buscarHorariosDisponiveis = async (req, res) => { // Função para busca
     const salas = await reservaService.getSalasDisponiveis(); // Chama o serviço para obter as salas disponíveis
     const horarios = await reservaService.getHorariosDisponiveisParaSalaEData(id_sala, data_reserva); // Chama o serviço para obter os horários disponíveis
     const notificacoes = await notificacaoService.listarPorUsuario(id_usuario); // Chama o serviço para obter as notificações do usuário
+    const usuario = await usuarioService.detail(id_usuario); // Chama o serviço para obter os detalhes do usuário
 
     res.render("reserva", { // Renderiza a página de reserva com os dados obtidos
       salas,
       notificacoes,
+      usuario,
       horarios,
       salaSelecionada: id_sala,
       dataSelecionada: data_reserva
@@ -86,7 +93,8 @@ exports.painelAdmin = async (req, res) => { // Função para renderizar o painel
 
   try {
     const reservas = await reservaService.listarPendentes(); // Chama o serviço para listar reservas pendentes
-    res.render("painelAdmin", { reservas }); // Renderiza a página do painel administrativo com as reservas pendentes
+    const usuario = await usuarioService.detail(id); // Chama o serviço para obter os detalhes do usuário
+    res.render("painelAdmin", { reservas, usuario }); // Renderiza a página do painel administrativo com as reservas pendentes
   } catch (e) {
     console.error(e);
     res.status(500).send("Erro ao carregar o painel da recepção."); // Envia uma resposta de erro ao cliente

@@ -56,13 +56,49 @@ body {
 }
 
 /* Foto de perfil */
+.foto-perfil-container {
+  margin-bottom: 30px;
+}
+
+.foto-perfil {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
 .foto-perfil img {
   width: 120px;
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #E84A4A;
-  margin-bottom: 30px;
+  transition: opacity 0.3s ease;
+}
+
+.upload-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: rgba(232, 74, 74, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.foto-perfil:hover .upload-overlay {
+  opacity: 1;
+}
+
+.upload-icon {
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
 }
 
 /* Formulário */
