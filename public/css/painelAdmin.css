@@ -1,0 +1,311 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo-link {
+  text-decoration: none;
+}
+
+.logo {
+  height: 45px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.perfil-link {
+  text-decoration: none;
+}
+
+.foto-perfil {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #e9ecef;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.foto-perfil:hover {
+  transform: scale(1.1);
+  border-color: #2e2640;
+}
+
+/* Conteúdo Principal */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Títulos */
+.titulo-principal {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.subtitulo {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+  background-color: #e84a4a;
+  color: white;
+  padding: 0.8rem 2rem;
+  border-radius: 25px;
+  margin-bottom: 2rem;
+}
+
+/* Container da Tabela */
+.tabela-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.tabela-wrapper {
+  background-color: #2e2640;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  overflow-x: auto;
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* Tabela */
+.tabela-reservas {
+  width: 100%;
+  border-collapse: collapse;
+  color: white;
+}
+
+.tabela-reservas th {
+  background-color: transparent;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 1rem 0.8rem;
+  text-align: center;
+  border-bottom: 2px solid #636e72;
+}
+
+.tabela-reservas td {
+  padding: 1rem 0.8rem;
+  text-align: center;
+  background-color: rgba(232, 74, 74, 0.8);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-weight: 500;
+}
+
+.tabela-reservas tr:hover td {
+  background-color: rgba(232, 74, 74, 0.9);
+}
+
+/* Colunas específicas */
+.usuario-email {
+  font-weight: 600;
+  max-width: 200px;
+  word-wrap: break-word;
+}
+
+.sala {
+  font-weight: 600;
+  color: #74b9ff;
+}
+
+.horario {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
+}
+
+.data {
+  font-weight: 600;
+}
+
+.ocupacao {
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+/* Ações */
+.acoes {
+  background-color: transparent !important;
+  padding: 0.5rem !important;
+}
+
+.form-acao {
+  display: inline-block;
+  margin: 0 0.3rem;
+}
+
+.btn-aceitar,
+.btn-rejeitar {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 80px;
+}
+
+.btn-aceitar {
+  background-color: #00b894;
+  color: white;
+}
+
+.btn-aceitar:hover {
+  background-color: #00a085;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 184, 148, 0.3);
+}
+
+.btn-rejeitar {
+  background-color: #e84a4a;
+  color: white;
+}
+
+.btn-rejeitar:hover {
+  background-color: #d63384;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(232, 74, 74, 0.3);
+}
+
+/* Mensagem quando não há reservas */
+.no-reservas {
+  background-color: #2e2640;
+  border-radius: 12px;
+  padding: 3rem;
+  text-align: center;
+  color: white;
+  font-size: 1.2rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.no-reservas p {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem;
+  }
+
+  .logo {
+    height: 35px;
+  }
+
+  .foto-perfil {
+    width: 35px;
+    height: 35px;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+
+  .titulo-principal {
+    font-size: 2rem;
+  }
+
+  .subtitulo {
+    font-size: 1.1rem;
+    padding: 0.6rem 1.5rem;
+    min-width: 250px;
+  }
+
+  .tabela-wrapper {
+    padding: 1rem;
+    overflow-x: auto;
+  }
+
+  .tabela-reservas th,
+  .tabela-reservas td {
+    padding: 0.8rem 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .btn-aceitar,
+  .btn-rejeitar {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+    min-width: 70px;
+  }
+
+  .form-acao {
+    margin: 0.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .titulo-principal {
+    font-size: 1.8rem;
+  }
+
+  .subtitulo {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    min-width: 200px;
+  }
+
+  .tabela-reservas th,
+  .tabela-reservas td {
+    padding: 0.6rem 0.3rem;
+    font-size: 0.8rem;
+  }
+
+  .usuario-email {
+    max-width: 120px;
+  }
+
+  .btn-aceitar,
+  .btn-rejeitar {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+    min-width: 60px;
+  }
+
+  .acoes {
+    padding: 0.3rem !important;
+  }
+
+  .form-acao {
+    display: block;
+    margin: 0.2rem 0;
+  }
+}

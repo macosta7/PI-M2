@@ -1,32 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title>Painel da Recepção</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Controle</title>
+  <link rel="stylesheet" href="/css/painelAdmin.css">
 </head>
 <body>
-  <h1>Painel da Recepção</h1>
+  <!-- Header -->
+  <div class="header">
+    <a href="/login" class="logo-link">
+      <img src="/img/checkin-room.png" alt="Logo Checkin Room" class="logo" />
+    </a>
+    <a href="/editar-perfil" class="perfil-link">
+      <img src="/img/perfil.png" alt="Perfil" class="foto-perfil" />
+    </a>
+  </div>
 
-  <% if (reservas.length === 0) { %>
-    <p>Nenhuma reserva pendente.</p>
-  <% } else { %>
-    <% reservas.forEach(r => { %>
-      <div style="border:1px solid #ccc; padding:10px; margin:10px;">
-        <p><strong>Usuário:</strong> <%= r.nm_usuario %></p>
-        <p><strong>Ocupação:</strong> <%= r.ocupacao_usuario %></p>
-        <p><strong>Sala:</strong> <%= r.nm_sala %></p>
-        <p><strong>Data:</strong> <%= r.data_reserva.toISOString().split('T')[0] %></p>
-        <p><strong>Horário:</strong> <%= r.horario_inicio %> - <%= r.horario_fim %></p>
+  <!-- Conteúdo Principal -->
+  <div class="main-content">
+    <!-- Títulos -->
+    <h1 class="titulo-principal">Reservas</h1>
+    <h2 class="subtitulo">Solicitações de Reserva</h2>
 
-        <form action="/reservas/<%= r.id_reserva %>/aprovar" method="POST" style="display:inline;">
-          <button type="submit">Aprovar</button>
-        </form>
-        <form action="/reservas/<%= r.id_reserva %>/rejeitar" method="POST" style="display:inline;">
-          <button type="submit">Rejeitar</button>
-        </form>
-      </div>
-    <% }) %>
-  <% } %>
-
-  <a href="/reserva">Voltar</a>
+    <!-- Container da Tabela -->
+    <div class="tabela-container">
+      <% if (reservas.length === 0) { %>
+        <div class="no-reservas">
+          <p>Nenhuma reserva pendente.</p>
+        </div>
+      <% } else { %>
+        <div class="tabela-wrapper">
+          <table class="tabela-reservas">
+            <thead>
+              <tr>
+                <th>Usuário (e-mail)</th>
+                <th>Sala</th>
+                <th>Horário</th>
+                <th>Data</th>
+                <th>Ocupação</th>
+                <th>Resposta</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% reservas.forEach(r => { %>
+                <tr>
+                  <td class="usuario-email"><%= r.email_usuario || r.nm_usuario %></td>
+                  <td class="sala"><%= r.nm_sala %></td>
+                  <td class="horario"><%= r.horario_inicio %> - <%= r.horario_fim %></td>
+                  <td class="data"><%= new Date(r.data_reserva).toLocaleDateString('pt-BR') %></td>
+                  <td class="ocupacao"><%= r.ocupacao_usuario %></td>
+                  <td class="acoes">
+                    <form action="/reservas/<%= r.id_reserva %>/aprovar" method="POST" class="form-acao">
+                      <button type="submit" class="btn-aceitar">Aceitar</button>
+                    </form>
+                    <form action="/reservas/<%= r.id_reserva %>/rejeitar" method="POST" class="form-acao">
+                      <button type="submit" class="btn-rejeitar">Rejeitar</button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </div>
+  </div>
 </body>
 </html>
