@@ -1,7 +1,5 @@
 # Web Application Document - Projeto Individual - Módulo 2 - Inteli
 
-**_Os trechos em itálico servem apenas como guia para o preenchimento da seção. Por esse motivo, não devem fazer parte da documentação final._**
-
 ## Checkin Room
 
 #### Marcela Costa
@@ -347,11 +345,59 @@ Aqui estão descritos todos os endpoints implementados no sistema Checkin Room. 
 
 ---
 
-> **Observação:** o sistema utiliza `express-session` para manter a sessão de login e validar qual usuário está autenticado nas rotas protegidas.
+**Observação:** o sistema utiliza `express-session` para manter a sessão de login e validar qual usuário está autenticado nas rotas protegidas.
 
-### 3.7 Interface e Navegação (Semana 07)
+### 3.7 Interface e Navegação
 
-*Descreva e ilustre aqui o desenvolvimento do frontend do sistema web, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar.*
+O desenvolvimento do front-end do sistema **Checkin Room** foi realizado visando as necessidades do usuário, com uma interface simples, intuitiva e uma identidade visual coerente e padronizado. O desenvolvimento da aplicação e estilização do front-end foi baseado no protótipo de alta fidelidade elaborado previamente. Abaixo estão as principais telas implementadas e o papel de cada uma na experiência do usuário.
+
+#### Tela de Login
+Permite que usuários acessem o sistema com e-mail e senha. O layout divide a tela entre uma imagem institucional e o formulário, reforçando a identidade da instituição.
+
+<div align="center">
+  <sub>Tela de Login</sub><br>
+  <img src="assets/login-checkin-room.png" width="85%"><br>
+</div>
+
+#### Tela de Cadastro
+Usuários podem criar uma conta informando nome, e-mail, ocupação, senha e adicionando uma foto de perfil. O botão "+" possibilita o upload da imagem. O design segue o padrão visual da tela de login.
+
+<div align="center">
+  <sub>Tela de Cadastro</sub><br>
+  <img src="assets/cadastro-checkin-room.png" width="85%"><br>
+</div>
+
+#### Tela de Reservas
+Após o login, os usuários são direcionados à tela de reserva de salas. Nela é possível selecionar a sala desejada, escolher a data em um calendário interativo e visualizar os horários disponíveis. A interface é clara e objetiva.
+
+<div align="center">
+  <sub>Tela de Reservas</sub><br>
+  <img src="assets/reservas-checkin-room.png" width="85%"><br>
+</div>
+
+#### Pop-up de Notificações
+Ao clicar no ícone de sino no canto superior direito, um pop-up exibe as notificações de reservas aprovadas ou rejeitadas. Cada item contém a sala, data, horário e um ícone visual indicando o status.
+
+<div align="center">
+  <sub>Pop up Notificações</sub><br>
+  <img src="assets/notificacoes-checkin-room.png" width="85%"><br>
+</div>
+
+#### Tela de Editar Perfil
+Permite que o usuário visualize e edite seus dados, incluindo nome, e-mail e senha, além de trocar a foto de perfil clicando no ícone de lápis. O botão "Salvar" atualiza as informações e redireciona para a tela de reservas.
+
+<div align="center">
+  <sub>Tela de Editar Perfil</sub><br>
+  <img src="assets/editar-checkin-room.png" width="85%"><br>
+</div>
+
+#### Painel de Controle (Admin)
+Disponível para usuários com perfil de recepção, esse painel lista todas as solicitações de reserva. É possível visualizar os dados de cada requisição e responder com as opções "Aceitar" ou "Rejeitar".
+
+<div align="center">
+  <sub>Tela do Painel de Controle</sub><br>
+  <img src="assets/painel-checkin-room.png" width="85%"><br>
+</div>
 
 ---
 
