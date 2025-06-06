@@ -489,9 +489,4 @@ O desenvolvimento do sistema Checkin Room proporcionou uma experiência completa
 - Adicionar a opção de cancelar uma reserva ou reagendar.
 - Possibilitar integração com serviços de calendário (Google Calendar ou Outlook).
 
-## <a name="c5"></a>5. Referências
-
-_Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
-
----
 ---
