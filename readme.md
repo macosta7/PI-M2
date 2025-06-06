@@ -64,7 +64,7 @@ PI-M2/
 │                                        
 ├── public/                        # Arquivos públicos (CSS, imagens, etc)                          
 │   └── css/                                         
-│       └── style.css              # Estilização da aplicação (não implementado ainda)                                            
+│       └── style.css              # Estilização da aplicação (layout responsivo com base no protótipo)                                           
 │                                    
 ├── .env                           # Variáveis de ambiente (credenciais DB, porta, etc)                                         
 ├── .gitignore                     # Arquivos e pastas ignorados pelo Git                                         
@@ -73,7 +73,36 @@ PI-M2/
 ├── server.js                      # Arquivo principal para iniciar o servidor Express                                        
 ├── readme.md                      # Documentação do projeto                                           
 └── PI-WAD.md                      # Entregável da disciplina/documentação formal                                    
-  
+
+## 🖼️ Interface do Sistema
+
+### Telas do Usuário
+![Login](assets/login-checkin-room.png)
+![Cadastro](assets/cadastro-checkin-room.png)
+![Reservas](assets/reservas-checkin-room.png)
+![Notificações](assets/notificacoes-checkin-room.png)
+![Editar Perfil](assets/editar-checkin-room.png)
+
+### Tela do Administrador
+![Painel de Controle](assets/painel-checkin-room.png)
+
+## 🎥 Vídeo de Demonstração
+
+- [▶️ Fluxo do Usuário](https://github.com/user-attachments/assets/cde74a6e-47de-4f04-9d8f-d545dbca0927)
+- [🛠️ Fluxo do Administrador](https://github.com/user-attachments/assets/a218fae5-fdf1-4355-872f-1e989789b817)
+
+
+## 🛠️ Tecnologias Utilizadas
+
+- Node.js
+- Express
+- EJS (Embedded JavaScript Templates)
+- PostgreSQL
+- Supabase (alternativa ao PostgreSQL)
+- Multer + UUID (upload e identificação de imagens de perfil)
+- dotenv (variáveis de ambiente)
+- Joi (validação de dados)
+- CSS customizado
 
 ## ▶️ Como Executar o Projeto Localmente
 
