@@ -408,12 +408,12 @@ Disponível para usuários com perfil de recepção, esse painel lista todas as 
 **VIDEO:**  
 <div align="center">
   <sub>Fluxo do Usuário</sub><br>
-  <video src="assets/video-user-pi.mp4" width="85%" controls loop></video><br>
+  <img src="assets/video-user-pi.gif" width="85%"><br>
 </div>
 
 <div align="center">
   <sub>Fluxo do Administrador</sub><br>
-  <video src="assets/video-admin-pi.mp4" width="85%" controls loop></video><br>
+  <img src="assets/video-admin-pi.gif" width="85%"><br>
 </div>
 
 Nesta etapa final do projeto, o sistema web foi totalmente implementado, integrando backend e frontend, com funcionalidades específicas para dois tipos de perfis: usuários comuns (alunos, professores e coordenadores) e o perfil de recepção (admin).
