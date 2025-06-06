@@ -401,7 +401,7 @@ Disponível para usuários com perfil de recepção, esse painel lista todas as 
 
 ---
 
-## <a name="c4"></a>4. Desenvolvimento da Aplicação Web (Semana 8)
+## <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
 ### 4.1 Demonstração do Sistema Web
 
@@ -466,12 +466,28 @@ Prints:
 - **Banco de dados**: modelagem relacional com controle de reservas, usuários, salas e horários.
 - **Upload e exibição de imagem de perfil** com armazenamento local.
 
-### 4.2 Conclusões e Trabalhos Futuros (Semana 8)
+### 4.2 Conclusões e Trabalhos Futuros
 
-*Indique pontos fortes e pontos a melhorar de maneira geral.*
-*Relacione também quaisquer outras ideias que você tenha para melhorias futuras.*
+O desenvolvimento do sistema Checkin Room proporcionou uma experiência completa de construção de uma aplicação web funcional, desde o back-end com autenticação e gerenciamento de dados em banco de dados, até o front-end com foco em usabilidade e responsividade. O sistema atendeu aos principais objetivos definidos no início do projeto: permitir o cadastro de usuários com diferentes perfis, reserva de salas por data e horário, além do controle de aprovações por parte da recepção.
 
+**Pontos fortes:**
+- Interface amigável, moderna e adaptada ao público-alvo.
+- Navegação intuitiva com fluxo claro para usuários comuns e administradores.
+- Funcionalidade de notificações em tempo real via pop-up.
+- Calendário customizado com seleção de datas e exibição de horários disponíveis.
+- Upload e edição de imagem de perfil integrada ao banco de dados.
 
+**Pontos a melhorar:**
+- Implementar validação visual de formulários no front-end (ex: campos obrigatórios).
+- Melhorar feedbacks visuais após ações como “Reserva feita” ou “Perfil atualizado”.
+- Incluir mensagens de erro personalizadas para facilitar a identificação de problemas.
+
+**Trabalhos futuros e ideias:**
+- Adicionar filtro por sala, data ou usuário no painel de controle para facilitar a gestão de reservas.
+- Implementar envio de notificações por e-mail ou push.
+- Criar um sistema de histórico de reservas para usuários.
+- Adicionar a opção de cancelar uma reserva ou reagendar.
+- Possibilitar integração com serviços de calendário (Google Calendar ou Outlook).
 
 ## <a name="c5"></a>5. Referências
 
