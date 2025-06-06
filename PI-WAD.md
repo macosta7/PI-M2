@@ -403,10 +403,68 @@ Disponível para usuários com perfil de recepção, esse painel lista todas as 
 
 ## <a name="c4"></a>4. Desenvolvimento da Aplicação Web (Semana 8)
 
-### 4.1 Demonstração do Sistema Web (Semana 8)
+### 4.1 Demonstração do Sistema Web
 
-*VIDEO: Insira o link do vídeo demonstrativo nesta seção*
-*Descreva e ilustre aqui o desenvolvimento do sistema web completo, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar.*
+**VIDEO:**  
+<div align="center">
+  <sub>Fluxo do Usuário</sub><br>
+  <video src="assets/video-user-pi.mp4" width="85%" controls loop></video><br>
+</div>
+
+<div align="center">
+  <sub>Fluxo do Administrador</sub><br>
+  <video src="assets/video-admin-pi.mp4" width="85%" controls loop></video><br>
+</div>
+
+Nesta etapa final do projeto, o sistema web foi totalmente implementado, integrando backend e frontend, com funcionalidades específicas para dois tipos de perfis: usuários comuns (alunos, professores e coordenadores) e o perfil de recepção (admin).
+
+#### Fluxo do Usuário
+O vídeo demonstra o fluxo completo de um usuário comum, incluindo:
+- Tela de **Login**, com layout dividido entre uma imagem institucional e campos de autenticação.
+- Tela de **Cadastro**, com inserção de dados pessoais, ocupação e upload de foto de perfil.
+- Página de **Reservas**, que permite ao usuário selecionar uma sala, visualizar o calendário interativo e reservar horários disponíveis.
+- **Notificações**, acessadas pelo ícone de sino no canto superior direito, com feedback visual (✓ ou ✗) para aprovações e rejeições.
+- Tela de **Edição de Perfil**, acessada pela imagem do usuário, permitindo alteração de dados e foto.
+
+Prints:
+<div align="center">
+  <sub>Tela de Login</sub><br>
+  <img src="assets/login-checkin-room.png" width="85%"><br>
+</div>
+<div align="center">
+  <sub>Tela de Cadastro</sub><br>
+  <img src="assets/cadastro-checkin-room.png" width="85%"><br>
+</div>
+<div align="center">
+  <sub>Tela de Reservas</sub><br>
+  <img src="assets/reservas-checkin-room.png" width="85%"><br>
+</div>
+<div align="center">
+  <sub>Pop-up de Notificações</sub><br>
+  <img src="assets/notificacoes-checkin-room.png" width="85%"><br>
+</div>
+<div align="center">
+  <sub>Tela de Editar Perfil</sub><br>
+  <img src="assets/editar-checkin-room.png" width="85%"><br>
+</div>
+
+#### Fluxo do Administrador
+O segundo vídeo demonstra o fluxo da recepção:
+- Acesso à tela de **Login** como admin (usuário com ocupação “recepção”).
+- Redirecionamento para o **Painel de Controle**, onde o admin pode visualizar todas as solicitações de reserva em uma tabela com dados do usuário, sala, data e horário.
+- O administrador pode **aceitar ou rejeitar** reservas com um clique, e o sistema envia automaticamente uma notificação ao usuário solicitante.
+
+Prints:
+<div align="center">
+  <sub>Tela do Painel de Controle</sub><br>
+  <img src="assets/painel-checkin-room.png" width="85%"><br>
+</div>
+
+#### Tecnologias e Entregas
+- **Frontend**: HTML, CSS customizado e JavaScript (sem frameworks).
+- **Backend**: Node.js com Express e integração com PostgreSQL.
+- **Banco de dados**: modelagem relacional com controle de reservas, usuários, salas e horários.
+- **Upload e exibição de imagem de perfil** com armazenamento local.
 
 ### 4.2 Conclusões e Trabalhos Futuros (Semana 8)
 
